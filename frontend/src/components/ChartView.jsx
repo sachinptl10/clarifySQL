@@ -15,13 +15,13 @@ export default function ChartView({ result }) {
     switch (chart_type) {
       case 'line':
         return (
-          <LineChart data={data} margin={{ top: 10, right: 30, left: 10, bottom: 20 }}>
+          <LineChart data={data} margin={{ top: 15, right: 35, left: 15, bottom: 25 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(20,28,43,0.1)" />
-            <XAxis dataKey="name" stroke="#4A5364" tick={{ fontSize: 11, fontFamily: 'Courier Prime' }} />
-            <YAxis stroke="#4A5364" tick={{ fontSize: 11, fontFamily: 'Courier Prime' }} />
-            <Tooltip contentStyle={{ backgroundColor: '#EFE9DD', border: '1px solid rgba(20,28,43,0.3)', color: '#141C2B', fontFamily: 'Courier Prime' }} />
-            <Legend wrapperStyle={{ fontFamily: 'Courier Prime', fontSize: 11 }} />
-            <Line type="monotone" dataKey="value" stroke="#2C4A8F" strokeWidth={2} dot={{ r: 4, fill: '#2C4A8F' }} activeDot={{ r: 6 }} />
+            <XAxis dataKey="name" stroke="#4A5364" tick={{ fontSize: 13, fontFamily: 'Courier Prime' }} />
+            <YAxis stroke="#4A5364" tick={{ fontSize: 13, fontFamily: 'Courier Prime' }} />
+            <Tooltip contentStyle={{ backgroundColor: '#EFE9DD', border: '1px solid rgba(20,28,43,0.3)', color: '#141C2B', fontFamily: 'Courier Prime', fontSize: 13 }} />
+            <Legend wrapperStyle={{ fontFamily: 'Courier Prime', fontSize: 13 }} />
+            <Line type="monotone" dataKey="value" stroke="#2C4A8F" strokeWidth={2.5} dot={{ r: 5, fill: '#2C4A8F' }} activeDot={{ r: 7 }} />
           </LineChart>
         );
       case 'pie':
@@ -32,8 +32,8 @@ export default function ChartView({ result }) {
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={chart_type === 'donut' ? 55 : 0}
-              outerRadius={95}
+              innerRadius={chart_type === 'donut' ? 65 : 0}
+              outerRadius={110}
               fill="#2C4A8F"
               paddingAngle={chart_type === 'donut' ? 3 : 0}
               dataKey="value"
@@ -43,19 +43,19 @@ export default function ChartView({ result }) {
                 <Cell key={`cell-${index}`} fill={INK_COLORS[index % INK_COLORS.length]} stroke="#EFE9DD" strokeWidth={1.5} />
               ))}
             </Pie>
-            <Tooltip contentStyle={{ backgroundColor: '#EFE9DD', border: '1px solid rgba(20,28,43,0.3)', color: '#141C2B', fontFamily: 'Courier Prime' }} />
-            <Legend wrapperStyle={{ fontFamily: 'Courier Prime', fontSize: 11 }} />
+            <Tooltip contentStyle={{ backgroundColor: '#EFE9DD', border: '1px solid rgba(20,28,43,0.3)', color: '#141C2B', fontFamily: 'Courier Prime', fontSize: 13 }} />
+            <Legend wrapperStyle={{ fontFamily: 'Courier Prime', fontSize: 13 }} />
           </PieChart>
         );
       case 'bar':
       default:
         return (
-          <BarChart data={data} margin={{ top: 10, right: 30, left: 10, bottom: 20 }}>
+          <BarChart data={data} margin={{ top: 15, right: 35, left: 15, bottom: 25 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(20,28,43,0.1)" />
-            <XAxis dataKey="name" stroke="#4A5364" tick={{ fontSize: 11, fontFamily: 'Courier Prime' }} />
-            <YAxis stroke="#4A5364" tick={{ fontSize: 11, fontFamily: 'Courier Prime' }} />
-            <Tooltip contentStyle={{ backgroundColor: '#EFE9DD', border: '1px solid rgba(20,28,43,0.3)', color: '#141C2B', fontFamily: 'Courier Prime' }} cursor={{ fill: 'rgba(20,28,43,0.05)' }} />
-            <Legend wrapperStyle={{ fontFamily: 'Courier Prime', fontSize: 11 }} />
+            <XAxis dataKey="name" stroke="#4A5364" tick={{ fontSize: 13, fontFamily: 'Courier Prime' }} />
+            <YAxis stroke="#4A5364" tick={{ fontSize: 13, fontFamily: 'Courier Prime' }} />
+            <Tooltip contentStyle={{ backgroundColor: '#EFE9DD', border: '1px solid rgba(20,28,43,0.3)', color: '#141C2B', fontFamily: 'Courier Prime', fontSize: 13 }} cursor={{ fill: 'rgba(20,28,43,0.05)' }} />
+            <Legend wrapperStyle={{ fontFamily: 'Courier Prime', fontSize: 13 }} />
             <Bar dataKey="value" fill="#2C4A8F" radius={0} />
           </BarChart>
         );
@@ -63,12 +63,12 @@ export default function ChartView({ result }) {
   };
 
   return (
-    <div className="border border-[#141C2B]/20 bg-[#EFE9DD] p-5 h-[360px] flex flex-col">
-      <div className="flex items-center justify-between mb-4 border-b border-[#141C2B]/15 pb-2">
-        <span className="font-serif text-[17px] font-medium text-[#141C2B]">
+    <div className="border border-[#141C2B]/20 bg-[#EFE9DD] p-6 h-[420px] flex flex-col">
+      <div className="flex items-center justify-between mb-4 border-b border-[#141C2B]/15 pb-3">
+        <span className="font-serif text-[20px] font-medium text-[#141C2B]">
           {title || 'Visual Output'}
         </span>
-        <span className="text-[10px] uppercase font-mono tracking-[0.1em] text-[#2C4A8F] font-bold">
+        <span className="text-[12px] uppercase font-mono tracking-[0.1em] text-[#2C4A8F] font-bold">
           {chart_type} chart
         </span>
       </div>

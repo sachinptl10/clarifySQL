@@ -11,15 +11,15 @@ export default function App() {
   const [sidebarTab, setSidebarTab] = useState('schema');
 
   return (
-    <div className="flex h-screen w-full bg-[#EFE9DD] text-[#141C2B] overflow-hidden font-mono text-[12px]">
+    <div className="flex h-screen w-full bg-[#EFE9DD] text-[#141C2B] overflow-hidden font-mono text-[14px]">
       
       {/* Left Sidebar - Warm Stationery Ground */}
-      <div className="w-80 flex-shrink-0 bg-[#E5DED0] border-r border-[#141C2B]/15 flex flex-col z-10">
+      <div className="w-88 sm:w-96 flex-shrink-0 bg-[#E5DED0] border-r border-[#141C2B]/15 flex flex-col z-10">
         
         {/* Navigation / Brand Header */}
-        <div className="h-[58px] px-5 border-b border-[#141C2B]/15 flex items-center justify-between">
+        <div className="h-[64px] px-6 border-b border-[#141C2B]/15 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="font-serif text-[19px] font-medium tracking-tight text-[#141C2B]">
+            <span className="font-serif text-[22px] font-medium tracking-tight text-[#141C2B]">
               ClarifySQL<span className="text-[#2C4A8F]">.</span>
             </span>
           </div>
@@ -27,33 +27,33 @@ export default function App() {
             href="/landing.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[10px] uppercase tracking-[0.1em] text-[#767E8C] hover:text-[#2C4A8F] transition-colors border border-[#141C2B]/20 px-2 py-1"
+            className="text-[11px] uppercase tracking-[0.12em] text-[#767E8C] hover:text-[#2C4A8F] transition-colors border border-[#141C2B]/20 px-2.5 py-1.5"
           >
             Overview ↗
           </a>
         </div>
         
         {/* Tab Toggle */}
-        <div className="flex border-b border-[#141C2B]/15 text-[11px] uppercase tracking-[0.1em]">
+        <div className="flex border-b border-[#141C2B]/15 text-[12px] uppercase tracking-[0.1em]">
           <button 
             onClick={() => setSidebarTab('schema')}
-            className={`flex-1 py-3 font-mono transition-colors border-r border-[#141C2B]/15 ${
+            className={`flex-1 py-3.5 font-mono transition-colors border-r border-[#141C2B]/15 ${
               sidebarTab === 'schema' 
                 ? 'bg-[#EFE9DD] text-[#141C2B] font-bold border-b-2 border-b-[#2C4A8F]' 
                 : 'text-[#767E8C] hover:text-[#141C2B] hover:bg-[#EAE3D5]'
             }`}
           >
-            Schema
+            Schema ({tables?.length || 0})
           </button>
           <button 
             onClick={() => setSidebarTab('history')}
-            className={`flex-1 py-3 font-mono transition-colors ${
+            className={`flex-1 py-3.5 font-mono transition-colors ${
               sidebarTab === 'history' 
                 ? 'bg-[#EFE9DD] text-[#141C2B] font-bold border-b-2 border-b-[#2C4A8F]' 
                 : 'text-[#767E8C] hover:text-[#141C2B] hover:bg-[#EAE3D5]'
             }`}
           >
-            History
+            History ({history?.length || 0})
           </button>
         </div>
 
@@ -68,7 +68,7 @@ export default function App() {
         </div>
 
         {/* Specs Foot */}
-        <div className="p-3 border-t border-[#141C2B]/15 text-[10px] uppercase tracking-[0.12em] text-[#767E8C] flex justify-between">
+        <div className="px-5 py-3.5 border-t border-[#141C2B]/15 text-[11px] uppercase tracking-[0.12em] text-[#767E8C] flex justify-between">
           <span>Read-Only</span>
           <span className="text-[#2C4A8F]">PostgreSQL</span>
         </div>
@@ -77,12 +77,12 @@ export default function App() {
       {/* Main Workspace Area */}
       <div className="flex-1 flex flex-col min-w-0 bg-[#EFE9DD] relative overflow-hidden">
         {/* Top bar */}
-        <header className="h-[58px] px-8 border-b border-[#141C2B]/15 flex items-center justify-between bg-[#EFE9DD]/80 backdrop-blur-md z-10">
+        <header className="h-[64px] px-8 border-b border-[#141C2B]/15 flex items-center justify-between bg-[#EFE9DD]/80 backdrop-blur-md z-10">
           <div className="flex items-center gap-3">
-            <span className="text-[11px] uppercase tracking-[0.12em] text-[#767E8C]">Pipeline:</span>
-            <span className="text-[11px] font-mono text-[#141C2B] border-b border-[#2C4A8F]">Query Understanding → Clarification Engine → Safe SQL</span>
+            <span className="text-[12px] uppercase tracking-[0.12em] text-[#767E8C]">Pipeline:</span>
+            <span className="text-[13px] font-mono text-[#141C2B] border-b border-[#2C4A8F]">Query Understanding → Clarification Engine → Safe SQL</span>
           </div>
-          <div className="flex items-center gap-4 text-[11px] tracking-[0.08em] text-[#767E8C]">
+          <div className="flex items-center gap-4 text-[12px] tracking-[0.08em] text-[#767E8C]">
             <span>Model: <strong className="text-[#141C2B] font-mono">Gemini 3 Flash</strong></span>
             <span>·</span>
             <span>Safety: <strong className="text-[#2C4A8F] font-mono">Enforced</strong></span>

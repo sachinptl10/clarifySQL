@@ -3,13 +3,17 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    font-size: 15px; /* Boosted base rem from 12px/16px default for comfortable reading without zooming */
+  }
+
   body {
     background-color: #EFE9DD;
     color: #141C2B;
     font-family: 'Courier Prime', 'Courier New', monospace;
-    font-size: 12px;
-    letter-spacing: 0.07em;
-    line-height: 1.8;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    line-height: 1.75;
   }
 
   /* Zero border-radius rule for stationery aesthetic */
@@ -20,15 +24,15 @@
 
 /* Custom Scrollbar in Stationery Ink */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
   background: #E5DED0;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(20, 28, 43, 0.25);
+  background: rgba(20, 28, 43, 0.28);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(20, 28, 43, 0.5);
+  background: rgba(20, 28, 43, 0.55);
 }
