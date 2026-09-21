@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClarifySQL — Ask your data anything</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── Palette & tokens ──────────────────────────────── */
+:root {
+  --ground:    #EFE9DD;
+  --ground-2:  #E5DED0;
+  --ink:       #141C2B;
+  --ink-2:     #4A5364;
+  --muted:     #767E8C;
+  --blue:      #2C4A8F;
+  --hairline:  rgba(20,28,43,.16);
+  --serif:     'Newsreader', Georgia, serif;
+  --mono:      'Courier Prime', 'Courier New', monospace;
+  --nav-h:     58px;
+}
+
+/* ── Reset ─────────────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .07em;
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+img, svg { display: block; }
+
+/* ── Typography helpers ────────────────────────────── */
+.t-serif     { font-family: var(--serif); letter-spacing: -.02em; line-height: 1.15; }
+.t-mono      { font-family: var(--mono);  letter-spacing: .07em;  line-height: 1.9; }
+.t-mono-tight{ font-family: var(--mono);  letter-spacing: .1em;   line-height: 1.6; }
+.t-blue      { color: var(--blue); }
+.t-muted     { color: var(--muted); }
+.t-ink2      { color: var(--ink-2); }
+.t-upper     { text-transform: uppercase; }
+.t-11        { font-size: 11px; }
+.t-12        { font-size: 12px; }
+
+/* ── Button ────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .1em;
+  text-transform: uppercase; padding: 12px 24px;
+  border: 1px solid var(--ink); border-radius: 0;
+  color: var(--ink); background: transparent;
+  transition: background .2s, color .2s;
+}
+.btn:hover { background: var(--ink); color: var(--ground); }
+.btn--fill { background: var(--ink); color: var(--ground); }
+.btn--fill:hover { background: var(--blue); border-color: var(--blue); }
+
+/* ── Navigation ────────────────────────────────────── */
+.nav {
+  position: fixed; top:0; left:0; right:0; z-index: 100;
+  height: var(--nav-h); display: flex; align-items: center;
+  padding: 0 clamp(20px, 4vw, 48px);
+  background: rgba(239,233,221,.82);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--hairline);
+}
+.nav__brand {
+  font-family: var(--serif); font-size: 19px; font-weight: 500;
+  letter-spacing: -.02em;
+}
+.nav__brand span { color: var(--blue); }
+.nav__links {
+  display: flex; gap: 32px; margin-left: auto; align-items: center;
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+}
+.nav__links a { transition: color .2s; }
+.nav__links a:hover { color: var(--blue); }
+.nav__cta {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  padding: 8px 18px; border: 1px solid var(--ink); border-radius: 0;
+  margin-left: 24px; transition: background .2s, color .2s;
+}
+.nav__cta:hover { background: var(--ink); color: var(--ground); }
+
+/* ── Section container ─────────────────────────────── */
+.section {
+  padding: 0 clamp(20px, 4vw, 48px);
+  position: relative;
+}
+
+/* ── Hero ──────────────────────────────────────────── */
+.hero {
+  min-height: calc(100vh - var(--nav-h));
+  margin-top: var(--nav-h);
+  background: var(--ground-2);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  padding-bottom: 0;
+}
+.hero__copy {
+  max-width: 46vw; min-width: 320px;
+  padding-top: clamp(48px, 8vh, 100px);
+  flex: 1;
+}
+.hero__kicker {
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 20px;
+}
+.hero__headline {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(32px, 4.6vw, 68px);
+  letter-spacing: -.02em; line-height: 1.08;
+  margin-bottom: 24px;
+}
+.hero__headline em {
+  font-style: italic; color: var(--blue); font-weight: 500;
+}
+.hero__lede {
+  font-size: 12px; color: var(--ink-2); max-width: 480px;
+  margin-bottom: 32px;
+}
+.hero__buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.hero__specs {
+  margin-top: auto;
+  border-top: 1px solid var(--hairline);
+  padding: 16px 0;
+  display: flex; gap: clamp(24px, 4vw, 64px); flex-wrap: wrap;
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted);
+}
+.hero__specs strong { color: var(--ink); font-weight: 700; }
+
+/* ── Hero Marquee Strip ────────────────────────────── */
+.hero__marquee {
+  width: calc(100% + clamp(40px, 8vw, 96px));
+  margin-left: calc(-1 * clamp(20px, 4vw, 48px));
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  background: var(--ground);
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  user-select: none;
+  padding: 10px 0;
+}
+.hero__marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+.marquee__track {
+  display: inline-flex;
+  gap: 32px;
+  animation: marqueeRoll 28s linear infinite;
+  will-change: transform;
+}
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.marquee__item strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+.marquee__item em {
+  font-style: italic;
+  font-family: var(--serif);
+  color: var(--blue);
+  text-transform: none;
+  font-size: 13px;
+}
+.marquee__dot {
+  color: var(--blue);
+  font-size: 8px;
+}
+
+@keyframes marqueeRoll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── Spread wordmark ───────────────────────────────── */
+.wordmark {
+  display: flex; justify-content: space-between;
+  width: calc(100% + 20px); margin-left: -10px;
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(64px, 12vw, 180px);
+  letter-spacing: -.04em; line-height: .82;
+  color: var(--ink); user-select: none;
+  transform: translateY(0.18em);
+  overflow: hidden;
+  opacity: .12;
+  transition: none;
+}
+.wordmark span {
+  display: inline-block;
+  transition: transform .6s cubic-bezier(.22,1,.36,1), opacity .6s;
+}
+
+/* ── Argument ──────────────────────────────────────── */
+.argument {
+  padding-top: clamp(80px, 10vh, 140px);
+  padding-bottom: clamp(80px, 10vh, 140px);
+}
+.argument__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 5vw, 80px);
+}
+.argument__left {}
+.argument__heading {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(24px, 3vw, 42px);
+  letter-spacing: -.02em; line-height: 1.12;
+  margin-bottom: 20px;
+}
+.argument__heading em { font-style: italic; color: var(--blue); }
+.argument__lede { color: var(--ink-2); max-width: 400px; }
+
+.argument__rows { display: flex; flex-direction: column; }
+.arg-row {
+  display: grid; grid-template-columns: 120px 1fr auto;
+  gap: 16px; align-items: baseline;
+  padding: 14px 0;
+  border-top: 1px solid var(--hairline);
+}
+.arg-row:last-child { border-bottom: 1px solid var(--hairline); }
+.arg-row__label {
+  font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--blue);
+  font-weight: 700;
+}
+.arg-row__desc { color: var(--ink-2); font-size: 12px; }
+.arg-row__val {
+  text-align: right; font-variant-numeric: tabular-nums;
+  font-weight: 700; font-size: 11px; white-space: nowrap;
+}
+
+/* ── Demonstration ─────────────────────────────────── */
+.demo {
+  padding-top: clamp(80px, 10vh, 140px);
+  padding-bottom: clamp(80px, 10vh, 140px);
+  background: var(--ground-2);
+}
+.demo__heading {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(24px, 3vw, 42px);
+  letter-spacing: -.02em; line-height: 1.12;
+  margin-bottom: 8px;
+}
+.demo__heading em { font-style: italic; color: var(--blue); }
+.demo__sub { color: var(--muted); margin-bottom: 28px; }
+
+.demo__variants {
+  display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.demo__variant-btn {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
+  text-transform: uppercase; padding: 8px 18px;
+  border: 1px solid var(--hairline); border-radius: 0;
+  color: var(--muted); background: transparent;
+  transition: all .2s;
+}
+.demo__variant-btn[aria-pressed="true"] {
+  border-color: var(--blue); color: var(--blue); font-weight: 700;
+}
+.demo__variant-btn:hover { border-color: var(--ink); color: var(--ink); }
+
+.demo__panel {
+  border: 1px solid var(--hairline);
+  background: var(--ground);
+  padding: clamp(24px, 3vw, 48px);
+  position: relative;
+  min-height: 280px;
+  display: flex; align-items: center; justify-content: center;
+}
+.demo__svg-wrap {
+  width: 100%; max-width: 700px;
+}
+.demo__svg-wrap svg {
+  width: 100%; height: auto;
+}
+.demo__svg-wrap path.draw-path {
+  fill: none;
+  stroke: var(--blue);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.demo__facts {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px; margin-top: 24px;
+}
+.demo__fact {
+  border-top: 1px solid var(--hairline);
+  padding-top: 12px;
+}
+.demo__fact-label {
+  font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 4px;
+}
+.demo__fact-value {
+  font-weight: 700; font-size: 12px; color: var(--ink);
+}
+
+/* ── Pipeline / Material ───────────────────────────── */
+.pipeline {
+  padding-top: clamp(80px, 10vh, 140px);
+  padding-bottom: clamp(80px, 10vh, 140px);
+}
+.pipeline__grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 5vw, 80px);
+}
+.pipeline__heading {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(24px, 3vw, 42px);
+  letter-spacing: -.02em; line-height: 1.12;
+  margin-bottom: 20px;
+}
+.pipeline__heading em { font-style: italic; color: var(--blue); }
+.pipeline__lede { color: var(--ink-2); max-width: 400px; }
+
+/* ── Measurements ──────────────────────────────────── */
+.measurements {
+  padding-top: clamp(60px, 8vh, 100px);
+  padding-bottom: clamp(80px, 10vh, 140px);
+  background: var(--ground-2);
+}
+.measurements__heading {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(24px, 3vw, 42px);
+  letter-spacing: -.02em; line-height: 1.12;
+  margin-bottom: 32px;
+}
+.measurements__heading em { font-style: italic; color: var(--blue); }
+.meas-row {
+  display: grid; grid-template-columns: 140px 1fr auto;
+  gap: 16px; align-items: baseline;
+  padding: 14px 0;
+  border-top: 1px solid var(--hairline);
+}
+.meas-row:last-child { border-bottom: 1px solid var(--hairline); }
+.meas-row__label {
+  font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--blue);
+  font-weight: 700;
+}
+.meas-row__desc { color: var(--ink-2); }
+.meas-row__val {
+  text-align: right; font-variant-numeric: tabular-nums;
+  font-weight: 700; white-space: nowrap;
+}
+
+/* ── Close ─────────────────────────────────────────── */
+.close-section {
+  padding-top: clamp(80px, 10vh, 140px);
+  padding-bottom: 0;
+  overflow: hidden;
+}
+.close__headline {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(28px, 4vw, 56px);
+  letter-spacing: -.02em; line-height: 1.12;
+  margin-bottom: 16px;
+}
+.close__headline em { font-style: italic; color: var(--blue); }
+.close__fine {
+  color: var(--muted); margin-bottom: 28px; font-size: 11px;
+}
+.close__buttons {
+  display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap;
+}
+.close__footer-strip {
+  border-top: 1px solid var(--hairline);
+  margin-top: 48px; padding: 12px 0;
+  font-size: 10px; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .1em;
+  display: flex; justify-content: space-between;
+}
+
+/* ── Travelling product ────────────────────────────── */
+.traveller {
+  position: fixed; z-index: 50;
+  pointer-events: none;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 8px 24px rgba(20,28,43,.18));
+  transition: none;
+}
+.traveller svg {
+  width: clamp(80px, 10vw, 140px);
+  height: auto;
+}
+
+/* ── Reveal animations ─────────────────────────────── */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .7s cubic-bezier(.22,1,.36,1),
+              transform .7s cubic-bezier(.22,1,.36,1);
+}
+.reveal.is-visible {
+  opacity: 1; transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: .1s; }
+.reveal-delay-2 { transition-delay: .2s; }
+.reveal-delay-3 { transition-delay: .3s; }
+.reveal-delay-4 { transition-delay: .4s; }
+
+/* ── Reduced motion ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .traveller { display: none !important; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .wordmark span { transition: none; }
+  .draw-path { transition: none !important; }
+}
+
+/* ── Responsive ────────────────────────────────────── */
+@media (max-width: 768px) {
+  .argument__grid, .pipeline__grid { grid-template-columns: 1fr; }
+  .hero__copy { max-width: 100%; }
+  .arg-row, .meas-row { grid-template-columns: 1fr; gap: 4px; }
+  .arg-row__val, .meas-row__val { text-align: left; }
+  .demo__facts { grid-template-columns: 1fr; }
+  .nav__links a:not(.nav__cta) { display: none; }
+  .wordmark { font-size: clamp(40px, 14vw, 100px); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav">
+  <a href="#" class="nav__brand">ClarifySQL<span>.</span></a>
+  <div class="nav__links">
+    <a href="#how">Ambiguities</a>
+    <a href="#demo">Demo</a>
+    <a href="#pipeline">Pipeline</a>
+    <a href="#schema">Schema</a>
+    <a href="#safety">Safety</a>
+    <a href="#specs">Specs</a>
+    <a href="/" class="nav__cta">Launch App</a>
+  </div>
+</nav>
+
+<!-- ═══ TRAVELLING PRODUCT (Fountain pen nib SVG) ═══ -->
+<div class="traveller" id="traveller" aria-hidden="true">
+  <svg viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M60 10 L60 170" stroke="var(--ink)" stroke-width="1.5" opacity=".2"/>
+    <path d="M60 8 C60 8 42 60 42 90 C42 110 48 130 52 148 L60 190 L68 148 C72 130 78 110 78 90 C78 60 60 8 60 8Z"
+          fill="var(--ink)" stroke="var(--ink)" stroke-width="1"/>
+    <path d="M54 80 L60 170 L66 80" fill="var(--ground)" stroke="none" opacity=".85"/>
+    <path d="M60 90 L60 170" stroke="var(--blue)" stroke-width="1.2"/>
+    <ellipse cx="60" cy="6" rx="8" ry="3" fill="var(--ink)"/>
+    <path d="M52 6 L52 0 C52 0 56 -2 60 -2 C64 -2 68 0 68 0 L68 6" fill="var(--ink)" stroke="none"/>
+  </svg>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero section" id="hero">
+  <div class="hero__copy">
+    <p class="hero__kicker t-mono-tight t-upper t-muted">Natural Language → Verified SQL</p>
+    <h1 class="hero__headline">
+      Ask your data anything.<br>
+      We'll <em>clarify</em> before<br>
+      we query.
+    </h1>
+    <p class="hero__lede t-mono t-ink2">
+      ClarifySQL detects ambiguity in natural language questions,
+      asks the minimum necessary clarification, then generates
+      validated, read-only SQL against your live schema.
+    </p>
+    <div class="hero__buttons">
+      <a href="/" class="btn btn--fill">Launch App</a>
+      <a href="https://github.com/sachinptl10/SpotFix-Civic-Reporting-App" class="btn">View Source</a>
+    </div>
+  </div>
+
+  <!-- ═══ RUNNING MARQUEE STRIP ═══ -->
+  <div class="hero__marquee" aria-label="Feature ticker">
+    <div class="marquee__track">
+      <span class="marquee__item"><span>NATURAL LANGUAGE</span> <em>→</em> <strong>STRUCTURED INTENT</strong></span>
+      <span class="marquee__dot">◆</span>
+      <span class="marquee__item"><span>SCHEMA INSPECTION</span> <em>via</em> <strong>SQLAlchemy 2.0</strong></span>
+      <span class="marquee__dot">◆</span>
+      <span class="marquee__item"><span>AMBIGUITY DETECTION</span> <em>before</em> <strong>ANY EXECUTION</strong></span>
+      <span class="marquee__dot">◆</span>
+      <span class="marquee__item"><span>SAFETY VERIFICATION</span> <em>using</em> <strong>sqlglot AST</strong></span>
+      <span class="marquee__dot">◆</span>
+      <span class="marquee__item"><span>READ-ONLY ENFORCEMENT</span> <em>with</em> <strong>TRANSACTION ISOLATION</strong></span>
+      <span class="marquee__dot">◆</span>
+      <span class="marquee__item"><span>VISUALIZATIONS</span> <em>recommended via</em> <strong>RECHARTS</strong></span>
+      <span class="marquee__dot">◆</span>
+      <!-- Duplicate set for seamless continuous loop -->
+      <span class="marquee__item"><span>NATURAL LANGUAGE</span> <em>→</em> <strong>STRUCTURED INTENT</strong></span>
+      <span class="marquee__dot">◆</span>
+      <span class="marquee__item"><span>SCHEMA INSPECTION</span> <em>via</em> <strong>SQLAlchemy 2.0</strong></span>
+      <span class="marquee__dot">◆</span>
+      <span class="marquee__item"><span>AMBIGUITY DETECTION</span> <em>before</em> <strong>ANY EXECUTION</strong></span>
+      <span class="marquee__dot">◆</span>
+      <span class="marquee__item"><span>SAFETY VERIFICATION</span> <em>using</em> <strong>sqlglot AST</strong></span>
+      <span class="marquee__dot">◆</span>
+      <span class="marquee__item"><span>READ-ONLY ENFORCEMENT</span> <em>with</em> <strong>TRANSACTION ISOLATION</strong></span>
+      <span class="marquee__dot">◆</span>
+      <span class="marquee__item"><span>VISUALIZATIONS</span> <em>recommended via</em> <strong>RECHARTS</strong></span>
+      <span class="marquee__dot">◆</span>
+    </div>
+  </div>
+
+  <div class="hero__specs t-mono-tight">
+    <span><strong>7</strong> Ambiguity Types</span>
+    <span><strong>3</strong> LLM Providers</span>
+    <span><strong>30</strong> Unit Tests</span>
+    <span><strong>Read-Only</strong> Enforced</span>
+  </div>
+
+  <div class="wordmark" id="wordmark" aria-hidden="true">
+    <span>C</span><span>L</span><span>A</span><span>R</span><span>I</span><span>F</span><span>Y</span><span>S</span><span>Q</span><span>L</span>
+  </div>
+</section>
+
+<!-- ═══ ARGUMENT ═══ -->
+<section class="argument section" id="how">
+  <div class="argument__grid">
+    <div class="argument__left reveal">
+      <h2 class="argument__heading">
+        Every vague question<br>hides <em>three real ones</em>
+      </h2>
+      <p class="argument__lede t-mono t-ink2">
+        "Show me Apple's sales" could mean revenue, units, or order
+        count — for the company, the brand, or the product — over
+        this year, last quarter, or all time. That's 27 possible
+        queries from five words. ClarifySQL finds the forks and
+        resolves them before a single row is touched.
+      </p>
+    </div>
+    <div class="argument__rows">
+      <div class="arg-row reveal reveal-delay-1">
+        <span class="arg-row__label">Entity</span>
+        <span class="arg-row__desc">Apple Inc. vs Apple brand vs apple products</span>
+        <span class="arg-row__val">3 meanings</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-2">
+        <span class="arg-row__label">Metric</span>
+        <span class="arg-row__desc">Revenue, order count, or units sold</span>
+        <span class="arg-row__val">3 metrics</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-2">
+        <span class="arg-row__label">Date Range</span>
+        <span class="arg-row__desc">All time, this year, last 30 days, last quarter</span>
+        <span class="arg-row__val">4 ranges</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-3">
+        <span class="arg-row__label">Grouping</span>
+        <span class="arg-row__desc">Total, by product, by month, by category</span>
+        <span class="arg-row__val">4 options</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-3">
+        <span class="arg-row__label">Comparison</span>
+        <span class="arg-row__desc">By price, by volume, by growth rate</span>
+        <span class="arg-row__val">3 axes</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-4">
+        <span class="arg-row__label">Filter</span>
+        <span class="arg-row__desc">Segment, region, status, payment method</span>
+        <span class="arg-row__val">4 facets</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-4">
+        <span class="arg-row__label">Terminology</span>
+        <span class="arg-row__desc">Sales vs revenue vs bookings vs orders</span>
+        <span class="arg-row__val">4 terms</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DEMONSTRATION ═══ -->
+<section class="demo section" id="demo">
+  <h2 class="demo__heading reveal">The engine <em>at work</em></h2>
+  <p class="demo__sub t-mono reveal">Watch the pipeline draw itself — from question to verified SQL.</p>
+
+  <div class="demo__variants reveal" role="radiogroup" aria-label="Query variant">
+    <button class="demo__variant-btn" aria-pressed="true"  data-variant="ambiguous">Ambiguous Query</button>
+    <button class="demo__variant-btn" aria-pressed="false" data-variant="clear">Clear Query</button>
+    <button class="demo__variant-btn" aria-pressed="false" data-variant="complex">Complex Join</button>
+  </div>
+
+  <div class="demo__panel reveal">
+    <div class="demo__svg-wrap">
+      <svg id="demoSvg" viewBox="0 0 700 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Flow nodes -->
+        <g class="flow-labels" font-family="Courier Prime, monospace" font-size="10" letter-spacing=".08em" fill="var(--muted)" text-anchor="middle">
+          <text x="50"  y="25">QUESTION</text>
+          <text x="190" y="25">INTENT</text>
+          <text x="330" y="25">CLARIFY</text>
+          <text x="470" y="25">SQL GEN</text>
+          <text x="610" y="25">EXECUTE</text>
+        </g>
+        <!-- Node circles -->
+        <circle cx="50"  cy="100" r="24" stroke="var(--hairline)" stroke-width="1" fill="var(--ground)"/>
+        <circle cx="190" cy="100" r="24" stroke="var(--hairline)" stroke-width="1" fill="var(--ground)"/>
+        <circle cx="330" cy="100" r="24" stroke="var(--blue)"     stroke-width="2" fill="var(--ground)"/>
+        <circle cx="470" cy="100" r="24" stroke="var(--hairline)" stroke-width="1" fill="var(--ground)"/>
+        <circle cx="610" cy="100" r="24" stroke="var(--hairline)" stroke-width="1" fill="var(--ground)"/>
+        <!-- Node icons -->
+        <text x="50"  y="104" text-anchor="middle" font-size="16" fill="var(--ink)">?</text>
+        <text x="190" y="104" text-anchor="middle" font-size="14" fill="var(--ink)">⟶</text>
+        <text x="330" y="104" text-anchor="middle" font-size="16" fill="var(--blue)" font-weight="bold">✦</text>
+        <text x="470" y="104" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--ink)">SQL</text>
+        <text x="610" y="104" text-anchor="middle" font-size="16" fill="var(--ink)">▶</text>
+        <!-- Connecting path that draws itself -->
+        <path id="flowPath" class="draw-path"
+              d="M 74 100 C 110 100 120 60 155 60
+                 C 175 60 180 100 166 100
+                 L 214 100 C 240 100 250 55 280 55
+                 C 290 55 295 75 306 100
+                 L 354 100 C 390 100 400 140 430 140
+                 C 450 140 455 100 446 100
+                 L 494 100 C 530 100 540 75 570 70
+                 C 580 68 585 100 586 100"
+              stroke-width="2"/>
+        <!-- Bottom labels for variant-dependent info -->
+        <text id="flowNote" x="330" y="175" text-anchor="middle"
+              font-family="Courier Prime, monospace" font-size="10"
+              letter-spacing=".07em" fill="var(--blue)">
+          3 AMBIGUITIES DETECTED → CLARIFICATION REQUIRED
+        </text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="demo__facts reveal">
+    <div class="demo__fact">
+      <div class="demo__fact-label">Questions Asked</div>
+      <div class="demo__fact-value" id="factQuestions">3</div>
+    </div>
+    <div class="demo__fact">
+      <div class="demo__fact-label">Tables Joined</div>
+      <div class="demo__fact-value" id="factTables">3</div>
+    </div>
+    <div class="demo__fact">
+      <div class="demo__fact-label">Confidence</div>
+      <div class="demo__fact-value" id="factConfidence">1.00</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PIPELINE / MATERIAL ═══ -->
+<section class="pipeline section" id="pipeline">
+  <div class="pipeline__grid">
+    <div class="reveal">
+      <h2 class="pipeline__heading">
+        Eight stages,<br>one <em>guarantee</em>
+      </h2>
+      <p class="pipeline__lede t-mono t-ink2">
+        Every question passes through the full pipeline.
+        The database never sees a write. The LLM never
+        sees your data. The user never waits without
+        knowing why.
+      </p>
+    </div>
+    <div class="argument__rows">
+      <div class="arg-row reveal">
+        <span class="arg-row__label">Stage 1</span>
+        <span class="arg-row__desc">Query Understanding — parse natural language into structured intent</span>
+        <span class="arg-row__val">LLM</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-1">
+        <span class="arg-row__label">Stage 2</span>
+        <span class="arg-row__desc">Schema Inspection — introspect live PostgreSQL tables and foreign keys</span>
+        <span class="arg-row__val">SQLAlchemy</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-1">
+        <span class="arg-row__label">Stage 3</span>
+        <span class="arg-row__desc">Ambiguity Detection — identify missing metric, entity, date range</span>
+        <span class="arg-row__val">7 types</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-2">
+        <span class="arg-row__label">Stage 4</span>
+        <span class="arg-row__desc">Clarification Engine — ask the minimum necessary questions</span>
+        <span class="arg-row__val t-blue">Core</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-2">
+        <span class="arg-row__label">Stage 5</span>
+        <span class="arg-row__desc">SQL Generation — produce PostgreSQL from finalized QueryIntent</span>
+        <span class="arg-row__val">LLM</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-3">
+        <span class="arg-row__label">Stage 6</span>
+        <span class="arg-row__desc">SQL Validation — parse with sqlglot, reject writes, verify tables</span>
+        <span class="arg-row__val">sqlglot</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-3">
+        <span class="arg-row__label">Stage 7</span>
+        <span class="arg-row__desc">Safe Execution — read-only with timeout and row limit enforcement</span>
+        <span class="arg-row__val">30s / 1k</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-4">
+        <span class="arg-row__label">Stage 8</span>
+        <span class="arg-row__desc">Result Processing — explanation, chart recommendation, history</span>
+        <span class="arg-row__val">Recharts</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SCHEMA GRAPH SECTION ═══ -->
+<section class="section" id="schema" style="padding-top: clamp(80px, 10vh, 140px); padding-bottom: clamp(80px, 10vh, 140px); background: var(--ground-2);">
+  <div class="argument__grid">
+    <div class="reveal">
+      <h2 class="pipeline__heading">
+        Introspected live,<br>seeded with <em>real nuance</em>
+      </h2>
+      <p class="pipeline__lede t-mono t-ink2">
+        The database contains 5 core business entities designed intentionally with real-world collision vectors. 
+        When a user asks about "Apple's sales", the system sees both corporate customer accounts and hardware brand catalog entries.
+      </p>
+    </div>
+    <div class="argument__rows">
+      <div class="arg-row reveal">
+        <span class="arg-row__label">customers</span>
+        <span class="arg-row__desc">id (PK), name, email, company, address, created_at</span>
+        <span class="arg-row__val">50 rows</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-1">
+        <span class="arg-row__label">products</span>
+        <span class="arg-row__desc">id (PK), name, category, brand, unit_price, stock</span>
+        <span class="arg-row__val">40 rows</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-1">
+        <span class="arg-row__label">orders</span>
+        <span class="arg-row__desc">id (PK), customer_id (FK), order_date, status, total_amount</span>
+        <span class="arg-row__val">300 rows</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-2">
+        <span class="arg-row__label">order_items</span>
+        <span class="arg-row__desc">id (PK), order_id (FK), product_id (FK), quantity, unit_price, discount, total</span>
+        <span class="arg-row__val">913 rows</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-2">
+        <span class="arg-row__label">payments</span>
+        <span class="arg-row__desc">id (PK), order_id (FK), payment_date, amount, method, status, transaction_id</span>
+        <span class="arg-row__val">275 rows</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-3">
+        <span class="arg-row__label">query_history</span>
+        <span class="arg-row__desc">id (PK), session_id, question, generated_sql, status, execution_time_ms, created_at</span>
+        <span class="arg-row__val">Audit Log</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SAFETY & DEFENSE IN DEPTH ═══ -->
+<section class="section" id="safety" style="padding-top: clamp(80px, 10vh, 140px); padding-bottom: clamp(80px, 10vh, 140px);">
+  <div class="argument__grid">
+    <div class="reveal">
+      <h2 class="pipeline__heading">
+        Defense-in-depth<br>for <em>every execution</em>
+      </h2>
+      <p class="pipeline__lede t-mono t-ink2">
+        Text-to-SQL is unsafe without deterministic validation. We do not rely on prompt warnings alone. 
+        Every candidate query traverses structural AST validation before it is ever sent to the PostgreSQL engine.
+      </p>
+    </div>
+    <div class="argument__rows">
+      <div class="arg-row reveal">
+        <span class="arg-row__label">AST Parser</span>
+        <span class="arg-row__desc">sqlglot walks full syntax tree; forbids INSERT, UPDATE, DELETE, DROP, ALTER, TRUNCATE</span>
+        <span class="arg-row__val">Deterministic</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-1">
+        <span class="arg-row__label">Multi-Stmt</span>
+        <span class="arg-row__desc">Rejects stacked queries separated by semicolons to block SQL injection attacks</span>
+        <span class="arg-row__val">Blocked</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-1">
+        <span class="arg-row__label">Schema Check</span>
+        <span class="arg-row__desc">Resolves table & column nodes against introspected schema to block hallucinated objects</span>
+        <span class="arg-row__val">Verified</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-2">
+        <span class="arg-row__label">Timeout</span>
+        <span class="arg-row__desc">Enforces SET statement_timeout = '30000' on database connection + asyncio.wait_for</span>
+        <span class="arg-row__val">30,000ms</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-2">
+        <span class="arg-row__label">Row Bounding</span>
+        <span class="arg-row__desc">Injects LIMIT 1000 automatically if query contains no user-specified row bound</span>
+        <span class="arg-row__val">1,000 Rows</span>
+      </div>
+      <div class="arg-row reveal reveal-delay-3">
+        <span class="arg-row__label">Read-Only</span>
+        <span class="arg-row__desc">Read-only connection sessions ensure zero mutations occur on the persistent store</span>
+        <span class="arg-row__val t-blue">Enforced</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MEASUREMENTS ═══ -->
+<section class="measurements section" id="specs">
+  <h2 class="measurements__heading reveal">Technical <em>specifications</em></h2>
+
+  <div class="meas-row reveal"><span class="meas-row__label">Backend</span><span class="meas-row__desc">Python 3.11+ / FastAPI / Pydantic / SQLAlchemy 2.0</span><span class="meas-row__val">34 files</span></div>
+  <div class="meas-row reveal"><span class="meas-row__label">Frontend</span><span class="meas-row__desc">React 18 / Vite / Tailwind CSS / Recharts</span><span class="meas-row__val">23 files</span></div>
+  <div class="meas-row reveal"><span class="meas-row__label">LLM Providers</span><span class="meas-row__desc">Gemini, OpenAI, Groq — swappable via .env</span><span class="meas-row__val">3</span></div>
+  <div class="meas-row reveal"><span class="meas-row__label">Database</span><span class="meas-row__desc">PostgreSQL / SQLite with async drivers</span><span class="meas-row__val">6 tables</span></div>
+  <div class="meas-row reveal"><span class="meas-row__label">Seed Data</span><span class="meas-row__desc">Customers, products, orders, items, payments</span><span class="meas-row__val">1,578 rows</span></div>
+  <div class="meas-row reveal"><span class="meas-row__label">Test Suite</span><span class="meas-row__desc">SQL validator, clarification service, evaluation harness</span><span class="meas-row__val">30 tests</span></div>
+  <div class="meas-row reveal"><span class="meas-row__label">SQL Safety</span><span class="meas-row__desc">SELECT-only enforcement via sqlglot AST analysis</span><span class="meas-row__val">Read-only</span></div>
+  <div class="meas-row reveal"><span class="meas-row__label">Query Timeout</span><span class="meas-row__desc">Configurable statement timeout on PostgreSQL</span><span class="meas-row__val">30 seconds</span></div>
+  <div class="meas-row reveal"><span class="meas-row__label">Row Limit</span><span class="meas-row__desc">Automatic LIMIT injection when absent</span><span class="meas-row__val">1,000 rows</span></div>
+  <div class="meas-row reveal"><span class="meas-row__label">Codebase</span><span class="meas-row__desc">Total lines across backend, frontend, tests</span><span class="meas-row__val">3,173 LOC</span></div>
+</section>
+
+<!-- ═══ CLOSE ═══ -->
+<section class="close-section section">
+  <h2 class="close__headline reveal">
+    Built to <em>clarify</em>,<br>shipped to query.
+  </h2>
+  <p class="close__fine t-mono reveal">
+    Open source · MIT License · No telemetry · Your schema stays local.
+  </p>
+  <div class="close__buttons reveal">
+    <a href="/" class="btn btn--fill">Launch App →</a>
+    <a href="https://github.com/sachinptl10/SpotFix-Civic-Reporting-App" class="btn">GitHub</a>
+  </div>
+
+  <div class="close__footer-strip">
+    <span>ClarifySQL · 2026</span>
+    <span>Gemini · OpenAI · Groq</span>
+  </div>
+
+  <div class="wordmark" id="wordmark2" aria-hidden="true">
+    <span>C</span><span>L</span><span>A</span><span>R</span><span>I</span><span>F</span><span>Y</span><span>S</span><span>Q</span><span>L</span>
+  </div>
+</section>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   ClarifySQL Landing — scroll, reveal, draw, travel
+   ═══════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  const prefersReducedMotion =
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Reveal on intersection ──────────────────────── */
+  if (!prefersReducedMotion) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach((el) =>
+      el.classList.add('is-visible')
+    );
+  }
+
+  /* ── SVG draw-on-entry ───────────────────────────── */
+  const flowPath = document.getElementById('flowPath');
+  if (flowPath) {
+    const len = flowPath.getTotalLength();
+    flowPath.style.strokeDasharray = len;
+    flowPath.style.strokeDashoffset = len;
+
+    if (!prefersReducedMotion) {
+      const drawIO = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              flowPath.style.transition =
+                'stroke-dashoffset 2.2s cubic-bezier(.22,1,.36,1)';
+              flowPath.style.strokeDashoffset = '0';
+              drawIO.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+      drawIO.observe(document.querySelector('.demo__panel'));
+    } else {
+      flowPath.style.strokeDashoffset = '0';
+    }
+  }
+
+  /* ── Variant picker ──────────────────────────────── */
+  const variants = {
+    ambiguous: {
+      questions: '3',
+      tables: '3',
+      confidence: '1.00',
+      note: '3 AMBIGUITIES DETECTED → CLARIFICATION REQUIRED',
+      strokeWidth: '2',
+      path: 'M 74 100 C 110 100 120 60 155 60 C 175 60 180 100 166 100 L 214 100 C 240 100 250 55 280 55 C 290 55 295 75 306 100 L 354 100 C 390 100 400 140 430 140 C 450 140 455 100 446 100 L 494 100 C 530 100 540 75 570 70 C 580 68 585 100 586 100',
+    },
+    clear: {
+      questions: '0',
+      tables: '1',
+      confidence: '0.95',
+      note: 'NO AMBIGUITY → DIRECT SQL GENERATION',
+      strokeWidth: '1.5',
+      path: 'M 74 100 L 166 100 L 214 100 L 306 100 L 354 100 L 446 100 L 494 100 L 586 100',
+    },
+    complex: {
+      questions: '2',
+      tables: '5',
+      confidence: '0.88',
+      note: '2 AMBIGUITIES + MULTI-TABLE JOIN → 5 TABLES',
+      strokeWidth: '2.5',
+      path: 'M 74 100 C 100 60 130 140 166 100 L 214 100 C 240 80 260 120 306 100 L 354 100 C 380 50 410 150 446 100 L 494 100 C 520 70 550 130 586 100',
+    },
+  };
+
+  document.querySelectorAll('.demo__variant-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document
+        .querySelectorAll('.demo__variant-btn')
+        .forEach((b) => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+
+      const v = variants[btn.dataset.variant];
+      document.getElementById('factQuestions').textContent = v.questions;
+      document.getElementById('factTables').textContent = v.tables;
+      document.getElementById('factConfidence').textContent = v.confidence;
+      document.getElementById('flowNote').textContent = v.note;
+
+      const fp = document.getElementById('flowPath');
+      fp.setAttribute('d', v.path);
+      fp.setAttribute('stroke-width', v.strokeWidth);
+
+      // Re-draw
+      const newLen = fp.getTotalLength();
+      fp.style.transition = 'none';
+      fp.style.strokeDasharray = newLen;
+      fp.style.strokeDashoffset = newLen;
+      requestAnimationFrame(() => {
+        fp.style.transition =
+          'stroke-dashoffset 1.4s cubic-bezier(.22,1,.36,1)';
+        fp.style.strokeDashoffset = '0';
+      });
+    });
+  });
+
+  /* ── Travelling product (scroll-bound) ───────────── */
+  if (!prefersReducedMotion) {
+    const traveller = document.getElementById('traveller');
+    // Keyframe stops: [scrollY%, x%, y%, rotateDeg, scale, opacity]
+    const stops = [
+      { s: 0,    x: 82, y: 18, r: -12, sc: 1.0,  o: 0.9 },
+      { s: 0.08, x: 78, y: 35, r:  -6, sc: 0.95, o: 0.85 },
+      { s: 0.18, x: 85, y: 55, r:   5, sc: 0.9,  o: 0.7  },
+      { s: 0.3,  x: 75, y: 30, r:  15, sc: 0.85, o: 0.5  },
+      { s: 0.4,  x: 70, y: 50, r:  25, sc: 0.7,  o: 0.2  },
+      { s: 0.5,  x: 65, y: 60, r:  30, sc: 0.5,  o: 0    },
+    ];
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    function updateTraveller() {
+      const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollMax > 0 ? window.scrollY / scrollMax : 0;
+
+      // Find surrounding stops
+      let i = 0;
+      while (i < stops.length - 1 && stops[i + 1].s <= progress) i++;
+      const a = stops[i];
+      const b = stops[Math.min(i + 1, stops.length - 1)];
+      const range = b.s - a.s || 1;
+      const t = Math.max(0, Math.min(1, (progress - a.s) / range));
+      // Ease in-out
+      const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+      const x = lerp(a.x, b.x, eased);
+      const y = lerp(a.y, b.y, eased);
+      const r = lerp(a.r, b.r, eased);
+      const sc = lerp(a.sc, b.sc, eased);
+      const o = lerp(a.o, b.o, eased);
+
+      traveller.style.left = x + 'vw';
+      traveller.style.top = y + 'vh';
+      traveller.style.transform = `translate(-50%,-50%) rotate(${r}deg) scale(${sc})`;
+      traveller.style.opacity = o;
+      traveller.style.visibility = o < 0.01 ? 'hidden' : 'visible';
+    }
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateTraveller();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+    updateTraveller();
+  }
+
+  /* ── Wordmark spread on scroll ───────────────────── */
+  if (!prefersReducedMotion) {
+    const wm = document.getElementById('wordmark');
+    const wm2 = document.getElementById('wordmark2');
+
+    function updateWordmark() {
+      const scrollY = window.scrollY;
+      // Hero wordmark: spread + sink as you scroll past hero
+      if (wm) {
+        const progress = Math.min(1, scrollY / 700);
+        const letters = wm.querySelectorAll('span');
+        const mid = (letters.length - 1) / 2;
+        letters.forEach((span, i) => {
+          const dist = (i - mid) * progress * 18;
+          const sink = progress * 20;
+          span.style.transform = `translateX(${dist}px) translateY(${sink}px)`;
+          span.style.opacity = 1 - progress * 0.6;
+        });
+      }
+    }
+
+    let wmTicking = false;
+    window.addEventListener('scroll', () => {
+      if (!wmTicking) {
+        requestAnimationFrame(() => {
+          updateWordmark();
+          wmTicking = false;
+        });
+        wmTicking = true;
+      }
+    });
+    updateWordmark();
+  }
+
+  /* ── Verify travel distance (dev check) ──────────── */
+  if (!prefersReducedMotion && window.location.hash === '#debug') {
+    let startX, startY;
+    window.addEventListener('scroll', function measure() {
+      const t = document.getElementById('traveller');
+      const r = t.getBoundingClientRect();
+      if (!startX) { startX = r.left; startY = r.top; }
+      if (window.scrollY > 700) {
+        const dist = Math.hypot(r.left - startX, r.top - startY);
+        console.log('[travel-check] distance after 700px scroll:', dist.toFixed(0), 'px');
+        window.removeEventListener('scroll', measure);
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>
