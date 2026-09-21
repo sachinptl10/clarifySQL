@@ -24,14 +24,19 @@
 
 /* ── Reset ─────────────────────────────────────────── */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  zoom: 1.25;
+  -moz-transform: scale(1.25);
+  -moz-transform-origin: 0 0;
+}
 body {
   background: var(--ground);
   color: var(--ink);
   font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: .07em;
-  line-height: 1.9;
+  font-size: 13px;
+  letter-spacing: .06em;
+  line-height: 1.85;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
