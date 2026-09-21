@@ -1,92 +1,154 @@
 <div align="center">
 
-# ✦ ClarifySQL ✦
+<!-- Animated Header Banner with Stationery Cream Palette -->
+<a href="https://github.com/sachinptl10/clarifySQL">
+  <img src="docs/assets/clarifysql-banner.svg" alt="ClarifySQL Banner" width="100%" />
+</a>
 
-### *Ask your data anything. We'll clarify before we query.*
+<br/><br/>
 
+<!-- Continuous Animating Ticker Ribbon -->
+<img src="docs/assets/clarifysql-marquee.svg" alt="ClarifySQL Pipeline Ticker" width="100%" />
+
+<br/><br/>
+
+<!-- Parchment Styled Badges -->
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.11+-141C2B?style=for-the-badge&logo=python&logoColor=EFE9DD" alt="Python" />
+  <img src="https://img.shields.io/badge/GROUND-%23EFE9DD-141C2B?style=for-the-badge" alt="Cream Ground" />
+  <img src="https://img.shields.io/badge/INK-%23141C2B-EFE9DD?style=for-the-badge" alt="Deep Ink" />
+  <img src="https://img.shields.io/badge/ACCENT-%232C4A8F-EFE9DD?style=for-the-badge" alt="Ink Blue" />
   <img src="https://img.shields.io/badge/FastAPI-0.115+-141C2B?style=for-the-badge&logo=fastapi&logoColor=2C4A8F" alt="FastAPI" />
   <img src="https://img.shields.io/badge/React-18.3-141C2B?style=for-the-badge&logo=react&logoColor=2C4A8F" alt="React" />
   <img src="https://img.shields.io/badge/PostgreSQL-17-141C2B?style=for-the-badge&logo=postgresql&logoColor=EFE9DD" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/sqlglot-AST_Safety-141C2B?style=for-the-badge&logo=databricks&logoColor=EFE9DD" alt="sqlglot" />
+  <img src="https://img.shields.io/badge/AST_Safety-sqlglot-141C2B?style=for-the-badge&logo=databricks&logoColor=EFE9DD" alt="sqlglot" />
   <img src="https://img.shields.io/badge/Tests-30%20Passed-2C4A8F?style=for-the-badge&logo=pytest&logoColor=EFE9DD" alt="Tests" />
-  <img src="https://img.shields.io/badge/License-MIT-141C2B?style=for-the-badge" alt="License" />
 </p>
-
-<p align="center">
-  <strong>Natural Language</strong> ➔ <strong>Ambiguity Detection</strong> ➔ <strong>Clarification Engine</strong> ➔ <strong>Verified Read-Only SQL</strong> ➔ <strong>Visual Insights</strong>
-</p>
-
----
 
 </div>
 
-## ✒️ Why ClarifySQL?
+---
 
-Most Text-to-SQL tools jump **directly from a question to raw SQL execution**. When a user enters:
-
-> *"Show me Apple's sales"*
-
-A naive model immediately writes a SQL query. But in real production databases, this request contains **at least 3 hidden ambiguities**:
-1. **Entity Ambiguity**: Does "Apple" refer to customer companies named *Apple Inc.* / *Apple Farm Co.* or products under the brand *Apple*?
-2. **Metric Ambiguity**: Does "sales" mean *total gross revenue*, *net quantity of units sold*, or *number of distinct orders*?
-3. **Temporal Ambiguity**: What period? *All time*, *fiscal year to date*, *last 30 days*, or *previous quarter*?
-
-That single sentence hides **over 27 distinct queries**.
-
-**ClarifySQL halts execution**, identifies the precise collision vectors using introspected live schema, presents clear, minimal clarification pills to the user, and **only then** generates and validates read-only SQL.
+<table width="100%" style="background-color: #EFE9DD; color: #141C2B; border: 1px solid rgba(20,28,43,0.18);">
+  <tr>
+    <td style="padding: 24px; font-family: 'Courier New', monospace; line-height: 1.8;">
+      <h3 style="margin-top: 0; font-family: Georgia, serif; font-size: 22px; color: #141C2B;">
+        ✒️ The Core Problem: Every Vague Question Hides <em>Three Real Ones</em>
+      </h3>
+      <p style="color: #4A5364; font-size: 14px;">
+        Standard Text-to-SQL models jump immediately from question to database query. 
+        When a user enters:
+      </p>
+      <blockquote style="background: #E5DED0; border-left: 4px solid #2C4A8F; margin: 12px 0; padding: 10px 16px; color: #141C2B; font-weight: bold;">
+        "Show me Apple's sales"
+      </blockquote>
+      <p style="color: #4A5364; font-size: 13px;">
+        In real production enterprise schemas, this input creates collision vectors:
+      </p>
+      <ul style="color: #141C2B; font-size: 13px;">
+        <li><strong>Entity Collision:</strong> Corporate account (<code style="background: #E5DED0; color: #2C4A8F;">customers.company = 'Apple Inc.'</code>) vs catalog brand (<code style="background: #E5DED0; color: #2C4A8F;">products.brand = 'Apple'</code>).</li>
+        <li><strong>Metric Ambiguity:</strong> Total revenue (<code style="background: #E5DED0; color: #2C4A8F;">SUM(total)</code>), unit volume (<code style="background: #E5DED0; color: #2C4A8F;">SUM(quantity)</code>), or order count (<code style="background: #E5DED0; color: #2C4A8F;">COUNT(DISTINCT order_id)</code>).</li>
+        <li><strong>Temporal Ambiguity:</strong> All time, fiscal year-to-date, or previous 30 days.</li>
+      </ul>
+      <p style="color: #2C4A8F; font-weight: bold; margin-bottom: 0; font-size: 13px;">
+        ➔ ClarifySQL halts query execution, presents targeted option pills, and builds a verified QueryIntent first.
+      </p>
+    </td>
+  </tr>
+</table>
 
 ---
 
-## 🏛️ Pipeline Architecture
+## 🏛️ End-to-End Pipeline Architecture
 
 ```mermaid
 flowchart TD
-    classDef input fill:#EFE9DD,stroke:#141C2B,stroke-width:1.5px,color:#141C2B;
-    classDef engine fill:#E5DED0,stroke:#2C4A8F,stroke-width:2px,color:#141C2B;
-    classDef safety fill:#FAF2EE,stroke:#8C2D19,stroke-width:1.5px,color:#141C2B;
-    classDef output fill:#EFE9DD,stroke:#2C4A8F,stroke-width:1.5px,color:#141C2B;
+    classDef creamNode fill:#FAF6EE,stroke:#141C2B,stroke-width:1.5px,color:#141C2B;
+    classDef blueNode fill:#E5DED0,stroke:#2C4A8F,stroke-width:2px,color:#141C2B;
+    classDef alertNode fill:#FAF2EE,stroke:#8C2D19,stroke-width:1.5px,color:#141C2B;
+    classDef outputNode fill:#FAF6EE,stroke:#2C4A8F,stroke-width:2px,color:#141C2B;
 
-    Q["1. Natural Language Question"]:::input --> INT["2. Intent Parsing (QueryIntent)"]:::engine
-    INT --> SCH["3. Live Schema Introspection"]:::engine
-    SCH --> AMB{"4. Ambiguity Detected?"}:::engine
+    Q["1. Natural Language Question"]:::creamNode --> INT["2. Intent Parsing (QueryIntent)"]:::blueNode
+    INT --> SCH["3. Live Schema Introspection"]:::blueNode
+    SCH --> AMB{"4. Ambiguity Detected?"}:::blueNode
 
-    AMB -- "Yes (7 Ambiguity Types)" --> CLAR["5. Clarification Engine (Interactive Dialog)"]:::engine
-    CLAR --> RES["6. Resolved QueryIntent"]:::engine
-    RES --> GEN["7. Structured SQL Generation"]:::engine
+    AMB -- "Yes (7 Typed Dimensions)" --> CLAR["5. Clarification Engine (Interactive Dialog)"]:::blueNode
+    CLAR --> RES["6. Resolved QueryIntent"]:::blueNode
+    RES --> GEN["7. Structured SQL Generation"]:::blueNode
 
-    AMB -- "No (Unambiguous)" --> GEN
+    AMB -- "No (Clear Intent)" --> GEN
 
-    GEN --> VAL["8. sqlglot AST Validator"]:::safety
-    VAL -- "Forbidden Write Statement / Hallucinated Column" --> ERR["Rejection & Correction Loop"]:::safety
-    VAL -- "Verified Read-Only SELECT" --> EXEC["9. PostgreSQL Engine (Timeout & Limit Enforced)"]:::safety
+    GEN --> VAL["8. sqlglot AST Validator"]:::alertNode
+    VAL -- "Forbidden Write Statement / Hallucinated Column" --> ERR["Rejection Notice & Safety Correction"]:::alertNode
+    VAL -- "Verified Read-Only SELECT" --> EXEC["9. PostgreSQL Engine (Timeout & Limit Enforced)"]:::alertNode
 
-    EXEC --> PROC["10. Result Processor"]:::output
-    PROC --> CHART["Interactive Recharts Visualizer"]:::output
-    PROC --> EXP["Natural Language Explanation Card"]:::output
-    PROC --> HIST["Session & Query Audit Log"]:::output
+    EXEC --> PROC["10. Result Processor"]:::outputNode
+    PROC --> CHART["Recharts Visualizer (Ink Palette)"]:::outputNode
+    PROC --> EXP["Natural Language Summary & Rationale"]:::outputNode
+    PROC --> HIST["Audit Log & Session State"]:::outputNode
 ```
 
 ---
 
-## 🎯 The 7 Ambiguity Dimensions
+## 🧭 The 7 Typed Ambiguity Dimensions
 
-ClarifySQL's engine categorizes ambiguity into 7 discrete, typed evaluation dimensions:
-
-| Dimension | Type | Example User Query | Clarification Prompt Generated |
-|:---|:---|:---|:---|
-| **1. Entity** | `ambiguous_entity` | *"Show me Apple's data"* | Product brand, customer company, or supplier? |
-| **2. Metric** | `missing_metric` | *"Show me performance for 2024"* | Total revenue, unit volume, or unique order count? |
-| **3. Date Range** | `missing_date_range` | *"What are our top selling items?"* | All-time, year-to-date, or last 30 days? |
-| **4. Grouping** | `missing_grouping` | *"Show sales breakdown"* | Group by product, customer, month, or category? |
-| **5. Comparison** | `ambiguous_comparison` | *"Compare laptop models"* | Compare by price point, units sold, or refund rate? |
-| **6. Filter** | `missing_filter` | *"List customer orders"* | Include completed only, or pending and refunded? |
-| **7. Terminology** | `ambiguous_terminology` | *"What's our burn rate / churn?"* | Map domain terminology to exact schema column equations |
+<table width="100%" style="background-color: #EFE9DD; border: 1px solid rgba(20,28,43,0.18);">
+  <thead>
+    <tr style="background-color: #E5DED0; color: #141C2B; font-family: 'Courier New', monospace; font-size: 12px; text-transform: uppercase;">
+      <th style="padding: 12px; border-bottom: 2px solid #2C4A8F; text-align: left;">Dimension</th>
+      <th style="padding: 12px; border-bottom: 2px solid #2C4A8F; text-align: left;">Ambiguity Key</th>
+      <th style="padding: 12px; border-bottom: 2px solid #2C4A8F; text-align: left;">Ambiguous Query</th>
+      <th style="padding: 12px; border-bottom: 2px solid #2C4A8F; text-align: left;">Engine Clarification Strategy</th>
+    </tr>
+  </thead>
+  <tbody style="font-family: 'Courier New', monospace; font-size: 12px; color: #141C2B;">
+    <tr style="border-bottom: 1px solid rgba(20,28,43,0.1);">
+      <td style="padding: 10px;"><strong>1. Entity</strong></td>
+      <td style="padding: 10px;"><code style="color: #2C4A8F; background: #E5DED0;">ambiguous_entity</code></td>
+      <td style="padding: 10px;"><em>"Show me Apple's data"</em></td>
+      <td style="padding: 10px;">Prompts user to select product brand vs customer company account.</td>
+    </tr>
+    <tr style="border-bottom: 1px solid rgba(20,28,43,0.1); background-color: #EAE3D5;">
+      <td style="padding: 10px;"><strong>2. Metric</strong></td>
+      <td style="padding: 10px;"><code style="color: #2C4A8F; background: #E5DED0;">missing_metric</code></td>
+      <td style="padding: 10px;"><em>"Show me performance for 2024"</em></td>
+      <td style="padding: 10px;">Disambiguates gross revenue vs order volume vs units shipped.</td>
+    </tr>
+    <tr style="border-bottom: 1px solid rgba(20,28,43,0.1);">
+      <td style="padding: 10px;"><strong>3. Date Range</strong></td>
+      <td style="padding: 10px;"><code style="color: #2C4A8F; background: #E5DED0;">missing_date_range</code></td>
+      <td style="padding: 10px;"><em>"What are our top selling items?"</em></td>
+      <td style="padding: 10px;">Offers All-time, Year-to-date, or Last 30 days boundaries.</td>
+    </tr>
+    <tr style="border-bottom: 1px solid rgba(20,28,43,0.1); background-color: #EAE3D5;">
+      <td style="padding: 10px;"><strong>4. Grouping</strong></td>
+      <td style="padding: 10px;"><code style="color: #2C4A8F; background: #E5DED0;">missing_grouping</code></td>
+      <td style="padding: 10px;"><em>"Show sales breakdown"</em></td>
+      <td style="padding: 10px;">Resolves aggregation grain: by product, by month, or by customer.</td>
+    </tr>
+    <tr style="border-bottom: 1px solid rgba(20,28,43,0.1);">
+      <td style="padding: 10px;"><strong>5. Comparison</strong></td>
+      <td style="padding: 10px;"><code style="color: #2C4A8F; background: #E5DED0;">ambiguous_comparison</code></td>
+      <td style="padding: 10px;"><em>"Compare laptop models"</em></td>
+      <td style="padding: 10px;">Prompts comparison axis: retail unit price vs sales volume.</td>
+    </tr>
+    <tr style="border-bottom: 1px solid rgba(20,28,43,0.1); background-color: #EAE3D5;">
+      <td style="padding: 10px;"><strong>6. Filter</strong></td>
+      <td style="padding: 10px;"><code style="color: #2C4A8F; background: #E5DED0;">missing_filter</code></td>
+      <td style="padding: 10px;"><em>"List customer orders"</em></td>
+      <td style="padding: 10px;">Clarifies status inclusion: completed only vs pending/refunded.</td>
+    </tr>
+    <tr>
+      <td style="padding: 10px;"><strong>7. Terminology</strong></td>
+      <td style="padding: 10px;"><code style="color: #2C4A8F; background: #E5DED0;">ambiguous_terminology</code></td>
+      <td style="padding: 10px;"><em>"What is our churn / net retention?"</em></td>
+      <td style="padding: 10px;">Maps informal business jargon to exact schema calculation equations.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
-## 🛡️ Defense-in-Depth SQL Safety Model
+## 🛡️ Four-Layer Deterministic Safety Shield
 
 ```
        ┌────────────────────────────────────────────────────────┐
@@ -95,29 +157,29 @@ ClarifySQL's engine categorizes ambiguity into 7 discrete, typed evaluation dime
                                    │
                                    ▼
        ┌────────────────────────────────────────────────────────┐
-       │  Layer 1: sqlglot AST Parser                           │
-       │  • Rejects: INSERT, UPDATE, DELETE, DROP, ALTER,       │
-       │    TRUNCATE, CREATE, GRANT, REVOKE                     │
+       │  Layer 1: sqlglot AST Walk                             │
+       │  • Strictly rejects: INSERT, UPDATE, DELETE, DROP,     │
+       │    ALTER, TRUNCATE, CREATE, GRANT, REVOKE              │
        └───────────────────────────┬────────────────────────────┘
                                    │
                                    ▼
        ┌────────────────────────────────────────────────────────┐
        │  Layer 2: Multi-Statement Stack Blocker                │
-       │  • Rejects semicolon-chained SQL injection attempts     │
+       │  • Rejects semicolon-separated query chaining          │
        └───────────────────────────┬────────────────────────────┘
                                    │
                                    ▼
        ┌────────────────────────────────────────────────────────┐
        │  Layer 3: Schema Column & Table Boundary Check         │
-       │  • Confirms all referenced tables and columns exist    │
-       │  • Eliminates LLM entity hallucinations                │
+       │  • Cross-references AST with introspected schema       │
+       │  • Blocks hallucinated tables or fabricated fields     │
        └───────────────────────────┬────────────────────────────┘
                                    │
                                    ▼
        ┌────────────────────────────────────────────────────────┐
-       │  Layer 4: Execution Bounding                           │
-       │  • Connection-level SET statement_timeout = '30000'    │
-       │  • Injects LIMIT 1000 automatically when omitted       │
+       │  Layer 4: Execution Resource Bounding                  │
+       │  • Injects LIMIT 1000 automatically                    │
+       │  • SET statement_timeout = '30000' (PostgreSQL)        │
        │  • Read-only async transaction context                 │
        └────────────────────────────────────────────────────────┘
 ```
@@ -126,7 +188,7 @@ ClarifySQL's engine categorizes ambiguity into 7 discrete, typed evaluation dime
 
 ## 📊 Live Introspected Database Schema
 
-Seeded with **1,578 realistic records** across 6 interconnected tables:
+Seeded with **1,578 records** across 6 relational tables:
 
 ```
   ┌──────────────┐         ┌──────────────┐         ┌──────────────┐
@@ -158,70 +220,61 @@ Seeded with **1,578 realistic records** across 6 interconnected tables:
 
 ## ⚡ Quickstart
 
-### Prerequisites
-- **Python**: 3.11+
-- **Node.js**: 18+
-- **PostgreSQL** or **SQLite** (pre-configured)
-- **API Key**: Gemini, OpenAI, or Groq
-
-### 1. Clone & Configure Backend
+### 1. Backend Setup
 ```bash
-git clone https://github.com/sachinptl10/SpotFix-Civic-Reporting-App.git
-cd ClarifySQL/backend
+git clone https://github.com/sachinptl10/clarifySQL.git
+cd clarifySQL/backend
 
-# Create virtual environment
+# Create and activate virtual environment
 python -m venv venv
-venv\Scripts\activate      # On Windows
-source venv/bin/activate   # On Linux/macOS
+venv\Scripts\activate      # Windows
+source venv/bin/activate   # Linux / macOS
 
-# Install dependencies
+# Install backend dependencies
 pip install -r requirements.txt
 
-# Configure your environment
+# Configure environment keys
 cp .env.example .env
 ```
 
-Edit `.env` with your preferred provider:
+Set your configuration in `.env`:
 ```ini
 DATABASE_URL=sqlite+aiosqlite:///clarifysql.db
-# Or for PostgreSQL:
-# DATABASE_URL=postgresql+asyncpg://postgres:password@localhost:5432/clarifysql
+# Or PostgreSQL: postgresql+asyncpg://postgres:password@localhost:5432/clarifysql
 
 LLM_PROVIDER=gemini        # 'gemini', 'openai', or 'groq'
-GEMINI_API_KEY=your_key_here
-OPENAI_API_KEY=your_key_here
-GROQ_API_KEY=your_key_here
+GEMINI_API_KEY=your_gemini_key
+OPENAI_API_KEY=your_openai_key
+GROQ_API_KEY=your_groq_key
 QUERY_TIMEOUT=30
 MAX_ROWS=1000
 ```
 
-### 2. Initialize & Seed Database
+### 2. Seed & Launch Backend
 ```bash
+# Seed mock tables (50 customers, 40 products, 300 orders, 913 items, 275 payments)
 python -m app.db.init_db
-```
-*Creates all tables and seeds 50 customers, 40 products, 300 orders, 913 line items, and 275 payments.*
 
-### 3. Launch the Backend Server
-```bash
+# Run FastAPI server
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
-- **API Documentation**: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-- **Health Check**: [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
+- **Swagger Docs**: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+- **Healthcheck**: [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
 
-### 4. Launch the Frontend
+### 3. Launch the Frontend
 ```bash
 cd ../frontend
 npm install
 npm run dev
 ```
-- **Interactive App**: [http://localhost:5173](http://localhost:5173)
-- **Stationery Landing Page**: [http://localhost:5173/landing.html](http://localhost:5173/landing.html)
+- **Interactive App Workspace**: [http://localhost:5173](http://localhost:5173)
+- **Scroll-Animated Landing Page**: [http://localhost:5173/landing.html](http://localhost:5173/landing.html)
 
 ---
 
 ## 🧪 Verification & Test Suite
 
-Run the full pytest suite (30 automated unit tests covering SQL safety, CTE validation, table verification, and clarification logic):
+Run the full pytest suite (30 unit tests covering SQL validation, CTEs, AST safety, and clarification prompts):
 
 ```bash
 cd backend
@@ -249,37 +302,14 @@ backend/tests/test_clarification.py::test_ambiguous_comparison PASSED    [100%]
 
 ---
 
-## 📦 Project Structure
-
-```
-ClarifySQL/
-├── backend/
-│   ├── app/
-│   │   ├── api/routes/          # FastAPI endpoints (query, schema, history)
-│   │   ├── models/              # SQLAlchemy models & DB connection pool
-│   │   ├── providers/           # Swappable LLM adapters (Gemini, OpenAI, Groq)
-│   │   ├── schemas/             # Pydantic contracts (Intent, Clarify, SQL)
-│   │   ├── services/            # Clarification Engine, Validator, Executor
-│   │   ├── db/seed.py           # Realistic database seeding with Apple ambiguity
-│   │   └── config.py            # Pydantic settings management
-│   ├── tests/                   # 30 unit tests + benchmark evaluation harness
-│   └── requirements.txt         # Pinned backend dependencies
-│
-└── frontend/
-    ├── public/landing.html      # Warm stationery landing page with scroll travel
-    ├── src/
-    │   ├── components/          # QueryInput, ClarificationDialog, SQLDisplay, etc.
-    │   ├── hooks/               # useQuery, useSchema, useHistory state machines
-    │   ├── pages/Dashboard.jsx  # Main workspace composing the full pipeline
-    │   └── services/api.js      # Axios client
-    └── package.json             # React 18, Tailwind CSS, Recharts, Vite
-```
-
----
-
 <div align="center">
 
-**ClarifySQL** — *Engineered with precision for reliable enterprise natural language queries.*  
-Crafted with FastAPI, React, and sqlglot · Open Source Under MIT License
+<table width="100%" style="background-color: #E5DED0; border: 1px solid rgba(20,28,43,0.18);">
+  <tr>
+    <td align="center" style="padding: 16px; font-family: 'Courier New', monospace; font-size: 11px; color: #767E8C; text-transform: uppercase;">
+      ClarifySQL · Crafted with FastAPI, React 18, and sqlglot · Open Source Under MIT License
+    </td>
+  </tr>
+</table>
 
 </div>

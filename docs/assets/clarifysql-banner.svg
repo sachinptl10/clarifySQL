@@ -1,0 +1,95 @@
+<svg width="100%" height="220" viewBox="0 0 920 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="creamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAF6EE" />
+      <stop offset="50%" stop-color="#EFE9DD" />
+      <stop offset="100%" stop-color="#E5DED0" />
+    </linearGradient>
+    <style>
+      .mono-text { font-family: 'Courier New', Courier, monospace; letter-spacing: 0.08em; }
+      .serif-text { font-family: 'Georgia', serif; }
+      
+      @keyframes floatPen {
+        0% { transform: translateY(0px) rotate(-8deg); }
+        50% { transform: translateY(-10px) rotate(-4deg); }
+        100% { transform: translateY(0px) rotate(-8deg); }
+      }
+      @keyframes drawLine {
+        0% { stroke-dashoffset: 400; }
+        50% { stroke-dashoffset: 0; }
+        100% { stroke-dashoffset: 0; }
+      }
+      @keyframes pulseGlow {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 0.9; }
+      }
+
+      .floating-pen {
+        animation: floatPen 4s ease-in-out infinite;
+        transform-origin: 820px 80px;
+      }
+      .ink-line {
+        stroke-dasharray: 400;
+        animation: drawLine 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+      }
+      .badge-glow {
+        animation: pulseGlow 2.5s ease-in-out infinite;
+      }
+    </style>
+  </defs>
+
+  <!-- Parchment / Cream Card Ground -->
+  <rect width="920" height="220" fill="url(#creamGrad)" stroke="#141C2B" stroke-opacity="0.18" stroke-width="1.5" />
+  
+  <!-- Subtle Internal Grid Hairlines -->
+  <line x1="0" y1="46" x2="920" y2="46" stroke="#141C2B" stroke-opacity="0.08" stroke-width="1" />
+  <line x1="0" y1="174" x2="920" y2="174" stroke="#141C2B" stroke-opacity="0.08" stroke-width="1" />
+
+  <!-- Top Technical Strip -->
+  <text x="32" y="30" class="mono-text" font-size="11" fill="#767E8C" text-transform="uppercase" font-weight="600">
+    SYSTEM ARCHITECTURE // DETERMINISTIC TEXT-TO-SQL
+  </text>
+  <text x="888" y="30" class="mono-text" font-size="11" fill="#2C4A8F" text-anchor="end" font-weight="700">
+    CLARIFICATION ENGINE v2.0
+  </text>
+
+  <!-- Main Headline in Deep Ink and Accent Ink Blue -->
+  <text x="32" y="98" class="serif-text" font-size="44" font-weight="600" fill="#141C2B" letter-spacing="-0.02em">
+    ClarifySQL<tspan fill="#2C4A8F">.</tspan>
+  </text>
+  
+  <text x="32" y="132" class="serif-text" font-size="20" font-style="italic" fill="#4A5364">
+    Ask your data anything. We'll <tspan fill="#2C4A8F" font-weight="bold">clarify</tspan> before we query.
+  </text>
+
+  <text x="32" y="156" class="mono-text" font-size="12" fill="#767E8C">
+    Natural Language → Ambiguity Detection → Schema Introspection → Safe Read-Only SQL
+  </text>
+
+  <!-- Animated Calligraphic Ink Line Beneath Title -->
+  <path class="ink-line" d="M 32 108 Q 160 112 280 108 T 520 109" stroke="#2C4A8F" stroke-width="2" stroke-linecap="round" fill="none" />
+
+  <!-- Bottom Badges / Metrics Strip -->
+  <text x="32" y="196" class="mono-text" font-size="11" fill="#141C2B" font-weight="700">
+    [ 7 ] <tspan fill="#4A5364" font-weight="normal">AMBIGUITY DIMENSIONS</tspan>
+  </text>
+  <text x="240" y="196" class="mono-text" font-size="11" fill="#141C2B" font-weight="700">
+    [ 0 ] <tspan fill="#4A5364" font-weight="normal">UNCHECKED WRITES</tspan>
+  </text>
+  <text x="440" y="196" class="mono-text" font-size="11" fill="#141C2B" font-weight="700">
+    [ 30/30 ] <tspan fill="#2C4A8F" font-weight="bold">PYTEST SUITE PASSED</tspan>
+  </text>
+  <text x="710" y="196" class="mono-text" font-size="11" fill="#141C2B" font-weight="700">
+    [ 100% ] <tspan fill="#4A5364" font-weight="normal">READ-ONLY AST</tspan>
+  </text>
+
+  <!-- Animated Floating Nib Instrument on Cream Ground -->
+  <g class="floating-pen">
+    <path d="M820 40 L820 135" stroke="#141C2B" stroke-width="1.2" opacity="0.3" />
+    <path d="M820 38 C820 38 804 76 804 98 C804 112 809 125 813 138 L820 168 L827 138 C831 125 836 112 836 98 C836 76 820 38 820 38 Z"
+          fill="#141C2B" stroke="#141C2B" stroke-width="1" />
+    <path d="M814 90 L820 152 L826 90" fill="#EFE9DD" stroke="none" opacity="0.9" />
+    <path d="M820 96 L820 152" stroke="#2C4A8F" stroke-width="1.5" />
+    <ellipse cx="820" cy="36" rx="6" ry="2.5" fill="#141C2B" />
+  </g>
+</svg>
