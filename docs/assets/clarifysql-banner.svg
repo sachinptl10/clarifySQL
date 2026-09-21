@@ -1,4 +1,4 @@
-<svg width="100%" height="220" viewBox="0 0 920 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" height="240" viewBox="0 0 920 240" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="creamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FAF6EE" />
@@ -6,90 +6,91 @@
       <stop offset="100%" stop-color="#E5DED0" />
     </linearGradient>
     <style>
-      .mono-text { font-family: 'Courier New', Courier, monospace; letter-spacing: 0.08em; }
-      .serif-text { font-family: 'Georgia', serif; }
-      
+      .mono-text {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+        letter-spacing: 0.1em;
+        font-weight: 700;
+      }
+      .serif-title {
+        font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+      .serif-sub {
+        font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+        font-style: italic;
+      }
       @keyframes floatPen {
         0% { transform: translateY(0px) rotate(-8deg); }
-        50% { transform: translateY(-10px) rotate(-4deg); }
+        50% { transform: translateY(-12px) rotate(-3deg); }
         100% { transform: translateY(0px) rotate(-8deg); }
       }
       @keyframes drawLine {
-        0% { stroke-dashoffset: 400; }
-        50% { stroke-dashoffset: 0; }
-        100% { stroke-dashoffset: 0; }
+        0% { stroke-dashoffset: 460; }
+        40%, 100% { stroke-dashoffset: 0; }
       }
-      @keyframes pulseGlow {
-        0%, 100% { opacity: 0.4; }
-        50% { opacity: 0.9; }
-      }
-
       .floating-pen {
-        animation: floatPen 4s ease-in-out infinite;
-        transform-origin: 820px 80px;
+        animation: floatPen 4.5s ease-in-out infinite;
+        transform-origin: 820px 90px;
       }
       .ink-line {
-        stroke-dasharray: 400;
-        animation: drawLine 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
-      }
-      .badge-glow {
-        animation: pulseGlow 2.5s ease-in-out infinite;
+        stroke-dasharray: 460;
+        animation: drawLine 3.6s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
       }
     </style>
   </defs>
 
   <!-- Parchment / Cream Card Ground -->
-  <rect width="920" height="220" fill="url(#creamGrad)" stroke="#141C2B" stroke-opacity="0.18" stroke-width="1.5" />
-  
-  <!-- Subtle Internal Grid Hairlines -->
-  <line x1="0" y1="46" x2="920" y2="46" stroke="#141C2B" stroke-opacity="0.08" stroke-width="1" />
-  <line x1="0" y1="174" x2="920" y2="174" stroke="#141C2B" stroke-opacity="0.08" stroke-width="1" />
+  <rect width="920" height="240" fill="url(#creamGrad)" stroke="#141C2B" stroke-opacity="0.2" stroke-width="1.5" />
 
-  <!-- Top Technical Strip -->
-  <text x="32" y="30" class="mono-text" font-size="11" fill="#767E8C" text-transform="uppercase" font-weight="600">
-    SYSTEM ARCHITECTURE // DETERMINISTIC TEXT-TO-SQL
+  <!-- Top Technical Header Strip -->
+  <rect x="0" y="0" width="920" height="42" fill="#E5DED0" stroke="#141C2B" stroke-opacity="0.1" stroke-width="1" />
+  <circle cx="36" cy="21" r="4.5" fill="#2C4A8F" />
+  <text x="50" y="25" class="mono-text" font-size="11" fill="#141C2B">
+    CLARIFYSQL <tspan fill="#767E8C">//</tspan> DETERMINISTIC AI TEXT-TO-SQL SYSTEM
   </text>
-  <text x="888" y="30" class="mono-text" font-size="11" fill="#2C4A8F" text-anchor="end" font-weight="700">
+  <text x="888" y="25" class="mono-text" font-size="11" fill="#2C4A8F" text-anchor="end">
     CLARIFICATION ENGINE v2.0
   </text>
 
   <!-- Main Headline in Deep Ink and Accent Ink Blue -->
-  <text x="32" y="98" class="serif-text" font-size="44" font-weight="600" fill="#141C2B" letter-spacing="-0.02em">
+  <text x="36" y="108" class="serif-title" font-size="48" fill="#141C2B">
     ClarifySQL<tspan fill="#2C4A8F">.</tspan>
   </text>
   
-  <text x="32" y="132" class="serif-text" font-size="20" font-style="italic" fill="#4A5364">
-    Ask your data anything. We'll <tspan fill="#2C4A8F" font-weight="bold">clarify</tspan> before we query.
+  <text x="36" y="146" class="serif-sub" font-size="22" fill="#4A5364">
+    Ask your data anything. We'll <tspan fill="#2C4A8F" font-weight="600">clarify</tspan> before we query.
   </text>
 
-  <text x="32" y="156" class="mono-text" font-size="12" fill="#767E8C">
-    Natural Language → Ambiguity Detection → Schema Introspection → Safe Read-Only SQL
+  <text x="36" y="172" class="mono-text" font-size="12" fill="#767E8C">
+    Natural Language ➔ Ambiguity Detection ➔ Schema Introspection ➔ Verified Read-Only SQL
   </text>
 
   <!-- Animated Calligraphic Ink Line Beneath Title -->
-  <path class="ink-line" d="M 32 108 Q 160 112 280 108 T 520 109" stroke="#2C4A8F" stroke-width="2" stroke-linecap="round" fill="none" />
+  <path class="ink-line" d="M 36 118 Q 180 122 320 118 T 540 119" stroke="#2C4A8F" stroke-width="2.5" stroke-linecap="round" fill="none" />
 
   <!-- Bottom Badges / Metrics Strip -->
-  <text x="32" y="196" class="mono-text" font-size="11" fill="#141C2B" font-weight="700">
-    [ 7 ] <tspan fill="#4A5364" font-weight="normal">AMBIGUITY DIMENSIONS</tspan>
+  <line x1="0" y1="196" x2="920" y2="196" stroke="#141C2B" stroke-opacity="0.12" stroke-width="1" />
+  <text x="36" y="218" class="mono-text" font-size="11" fill="#141C2B">
+    [ 7 ] <tspan fill="#767E8C">AMBIGUITY DIMENSIONS</tspan>
   </text>
-  <text x="240" y="196" class="mono-text" font-size="11" fill="#141C2B" font-weight="700">
-    [ 0 ] <tspan fill="#4A5364" font-weight="normal">UNCHECKED WRITES</tspan>
+  <text x="250" y="218" class="mono-text" font-size="11" fill="#141C2B">
+    [ 0 ] <tspan fill="#767E8C">UNCHECKED MUTATIONS</tspan>
   </text>
-  <text x="440" y="196" class="mono-text" font-size="11" fill="#141C2B" font-weight="700">
-    [ 30/30 ] <tspan fill="#2C4A8F" font-weight="bold">PYTEST SUITE PASSED</tspan>
+  <text x="460" y="218" class="mono-text" font-size="11" fill="#2C4A8F">
+    [ 30/30 ] <tspan fill="#141C2B">TESTS PASSED</tspan>
   </text>
-  <text x="710" y="196" class="mono-text" font-size="11" fill="#141C2B" font-weight="700">
-    [ 100% ] <tspan fill="#4A5364" font-weight="normal">READ-ONLY AST</tspan>
+  <text x="680" y="218" class="mono-text" font-size="11" fill="#141C2B">
+    [ 100% ] <tspan fill="#767E8C">READ-ONLY AST ENFORCED</tspan>
   </text>
 
   <!-- Animated Floating Nib Instrument on Cream Ground -->
   <g class="floating-pen">
-    <path d="M820 40 L820 135" stroke="#141C2B" stroke-width="1.2" opacity="0.3" />
-    <path d="M820 38 C820 38 804 76 804 98 C804 112 809 125 813 138 L820 168 L827 138 C831 125 836 112 836 98 C836 76 820 38 820 38 Z"
+    <path d="M820 45 L820 145" stroke="#141C2B" stroke-width="1.2" opacity="0.3" />
+    <path d="M820 42 C820 42 802 82 802 106 C802 122 808 136 812 150 L820 182 L828 150 C832 136 838 122 838 106 C838 82 820 42 820 42 Z"
           fill="#141C2B" stroke="#141C2B" stroke-width="1" />
-    <path d="M814 90 L820 152 L826 90" fill="#EFE9DD" stroke="none" opacity="0.9" />
-    <path d="M820 96 L820 152" stroke="#2C4A8F" stroke-width="1.5" />
-    <ellipse cx="820" cy="36" rx="6" ry="2.5" fill="#141C2B" />
+    <path d="M814 96 L820 164 L826 96" fill="#EFE9DD" stroke="none" opacity="0.95" />
+    <path d="M820 102 L820 164" stroke="#2C4A8F" stroke-width="1.8" />
+    <ellipse cx="820" cy="40" rx="7" ry="3" fill="#141C2B" />
   </g>
 </svg>

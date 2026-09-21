@@ -1,70 +1,69 @@
-<svg width="100%" height="90" viewBox="0 0 920 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" height="96" viewBox="0 0 920 96" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
-      .ticker-text { font-family: 'Courier New', Courier, monospace; font-size: 11px; letter-spacing: 0.14em; font-weight: bold; }
+      .ticker-text {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+      .tag-text {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+      }
       @keyframes marqueeLeft {
         0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
+        100% { transform: translateX(-1600px); }
       }
       .track {
-        animation: marqueeLeft 24s linear infinite;
-        display: flex;
+        animation: marqueeLeft 28s linear infinite;
+        will-change: transform;
       }
     </style>
   </defs>
 
-  <rect width="920" height="90" fill="#EAE3D5" stroke="#141C2B" stroke-opacity="0.2" stroke-width="1.2" />
+  <!-- Cream Parchment Ground -->
+  <rect width="920" height="96" fill="#EFE9DD" stroke="#141C2B" stroke-opacity="0.2" stroke-width="1.2" />
 
-  <line x1="0" y1="20" x2="920" y2="20" stroke="#141C2B" stroke-opacity="0.08" stroke-width="1" />
-  <text x="32" y="14" font-family="'Courier New', monospace" font-size="9" fill="#767E8C" letter-spacing="0.12em" text-transform="uppercase">
-    CONTINUOUS PIPELINE GUARANTEE // ZERO UNVALIDATED QUERIES
+  <!-- Top hairline & Category header -->
+  <rect x="0" y="0" width="920" height="28" fill="#E5DED0" stroke="#141C2B" stroke-opacity="0.12" stroke-width="1" />
+  <circle cx="24" cy="14" r="4" fill="#2C4A8F" />
+  <text x="36" y="18" class="tag-text" fill="#141C2B">
+    CONTINUOUS PIPELINE GUARANTEE <tspan fill="#767E8C">//</tspan> ZERO UNVALIDATED QUERIES <tspan fill="#767E8C">//</tspan> READ-ONLY ENFORCED
   </text>
 
-  <g transform="translate(0, 32)">
+  <!-- Running Marquee Track -->
+  <g transform="translate(0, 40)">
     <g class="track">
-      <!-- Repeat 1 -->
-      <text x="20" y="24" class="ticker-text" fill="#141C2B">
-        NATURAL LANGUAGE <tspan fill="#2C4A8F">➔</tspan> STRUCTURED INTENT
-      </text>
-      <text x="300" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
-      <text x="330" y="24" class="ticker-text" fill="#141C2B">
-        LIVE SCHEMA INSPECTION <tspan fill="#767E8C">VIA</tspan> SQLALCHEMY 2.0
-      </text>
-      <text x="660" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
-      <text x="690" y="24" class="ticker-text" fill="#141C2B">
-        AMBIGUITY DETECTION <tspan fill="#767E8C">BEFORE</tspan> EXECUTION
-      </text>
-      <text x="1010" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
-      <text x="1040" y="24" class="ticker-text" fill="#141C2B">
-        AST VALIDATOR <tspan fill="#767E8C">VIA</tspan> SQLGLOT
-      </text>
-      <text x="1270" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
-      <text x="1300" y="24" class="ticker-text" fill="#141C2B">
-        TIMEOUT 30,000MS <tspan fill="#767E8C">+</tspan> LIMIT 1000
-      </text>
-      <text x="1600" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
+      <!-- Set 1 (Total width = 1600px) -->
+      <g transform="translate(0, 0)">
+        <text x="20" y="24" class="ticker-text" fill="#141C2B">NATURAL LANGUAGE <tspan fill="#2C4A8F">➔</tspan> STRUCTURED INTENT</text>
+        <text x="370" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
+        <text x="400" y="24" class="ticker-text" fill="#141C2B">SCHEMA INTROSPECTION <tspan fill="#767E8C">VIA</tspan> SQLALCHEMY</text>
+        <text x="750" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
+        <text x="780" y="24" class="ticker-text" fill="#141C2B">AMBIGUITY DETECTION <tspan fill="#767E8C">BEFORE</tspan> EXECUTION</text>
+        <text x="1170" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
+        <text x="1200" y="24" class="ticker-text" fill="#141C2B">AST VALIDATOR <tspan fill="#767E8C">VIA</tspan> SQLGLOT</text>
+        <text x="1460" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
+        <text x="1490" y="24" class="ticker-text" fill="#141C2B">TIMEOUT 30s + LIMIT 1000</text>
+        <text x="1760" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
+      </g>
 
-      <!-- Repeat 2 for continuous loop -->
-      <text x="1630" y="24" class="ticker-text" fill="#141C2B">
-        NATURAL LANGUAGE <tspan fill="#2C4A8F">➔</tspan> STRUCTURED INTENT
-      </text>
-      <text x="1910" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
-      <text x="1940" y="24" class="ticker-text" fill="#141C2B">
-        LIVE SCHEMA INSPECTION <tspan fill="#767E8C">VIA</tspan> SQLALCHEMY 2.0
-      </text>
-      <text x="2270" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
-      <text x="2300" y="24" class="ticker-text" fill="#141C2B">
-        AMBIGUITY DETECTION <tspan fill="#767E8C">BEFORE</tspan> EXECUTION
-      </text>
-      <text x="2620" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
-      <text x="2650" y="24" class="ticker-text" fill="#141C2B">
-        AST VALIDATOR <tspan fill="#767E8C">VIA</tspan> SQLGLOT
-      </text>
-      <text x="2880" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
-      <text x="2910" y="24" class="ticker-text" fill="#141C2B">
-        TIMEOUT 30,000MS <tspan fill="#767E8C">+</tspan> LIMIT 1000
-      </text>
-      <text x="3210" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
+      <!-- Set 2 (Identical duplicate offset by 1600px) -->
+      <g transform="translate(1600, 0)">
+        <text x="20" y="24" class="ticker-text" fill="#141C2B">NATURAL LANGUAGE <tspan fill="#2C4A8F">➔</tspan> STRUCTURED INTENT</text>
+        <text x="370" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
+        <text x="400" y="24" class="ticker-text" fill="#141C2B">SCHEMA INTROSPECTION <tspan fill="#767E8C">VIA</tspan> SQLALCHEMY</text>
+        <text x="750" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
+        <text x="780" y="24" class="ticker-text" fill="#141C2B">AMBIGUITY DETECTION <tspan fill="#767E8C">BEFORE</tspan> EXECUTION</text>
+        <text x="1170" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
+        <text x="1200" y="24" class="ticker-text" fill="#141C2B">AST VALIDATOR <tspan fill="#767E8C">VIA</tspan> SQLGLOT</text>
+        <text x="1460" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
+        <text x="1490" y="24" class="ticker-text" fill="#141C2B">TIMEOUT 30s + LIMIT 1000</text>
+        <text x="1760" y="24" class="ticker-text" fill="#2C4A8F">◆</text>
+      </g>
     </g>
   </g>
 </svg>
