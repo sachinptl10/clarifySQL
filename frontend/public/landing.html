@@ -408,7 +408,7 @@ img, svg { display: block; }
   transition: none;
 }
 .traveller svg {
-  width: clamp(80px, 10vw, 140px);
+  width: clamp(70px, 8vw, 110px);
   height: auto;
 }
 
@@ -976,12 +976,12 @@ img, svg { display: block; }
     const traveller = document.getElementById('traveller');
     // Keyframe stops: [scrollY%, x%, y%, rotateDeg, scale, opacity]
     const stops = [
-      { s: 0,    x: 82, y: 18, r: -12, sc: 1.0,  o: 0.9 },
-      { s: 0.08, x: 78, y: 35, r:  -6, sc: 0.95, o: 0.85 },
-      { s: 0.18, x: 85, y: 55, r:   5, sc: 0.9,  o: 0.7  },
-      { s: 0.3,  x: 75, y: 30, r:  15, sc: 0.85, o: 0.5  },
-      { s: 0.4,  x: 70, y: 50, r:  25, sc: 0.7,  o: 0.2  },
-      { s: 0.5,  x: 65, y: 60, r:  30, sc: 0.5,  o: 0    },
+      { s: 0,    x: 74, y: 22, r: -12, sc: 0.95, o: 0.9 },
+      { s: 0.08, x: 70, y: 36, r:  -6, sc: 0.9,  o: 0.85 },
+      { s: 0.18, x: 75, y: 52, r:   5, sc: 0.85, o: 0.7  },
+      { s: 0.3,  x: 68, y: 35, r:  15, sc: 0.8,  o: 0.5  },
+      { s: 0.4,  x: 64, y: 48, r:  22, sc: 0.65, o: 0.2  },
+      { s: 0.5,  x: 60, y: 58, r:  28, sc: 0.5,  o: 0    },
     ];
 
     function lerp(a, b, t) {
