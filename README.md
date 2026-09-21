@@ -2,13 +2,13 @@
 
 <!-- Animated Header Banner with Stationery Cream Palette -->
 <a href="https://github.com/sachinptl10/clarifySQL">
-  <img src="docs/assets/clarifysql-banner.svg" alt="ClarifySQL Banner" width="100%" />
+  <img src="docs/assets/clarifysql-banner-v2.svg?v=2" alt="ClarifySQL Banner" width="100%" />
 </a>
 
 <br/><br/>
 
 <!-- Continuous Animating Ticker Ribbon -->
-<img src="docs/assets/clarifysql-marquee.svg" alt="ClarifySQL Pipeline Ticker" width="100%" />
+<img src="docs/assets/clarifysql-marquee-v2.svg?v=2" alt="ClarifySQL Pipeline Ticker" width="100%" />
 
 <br/><br/>
 

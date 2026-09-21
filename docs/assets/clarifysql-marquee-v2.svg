@@ -1,0 +1,91 @@
+<svg width="100%" height="96" viewBox="0 0 920 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .t-item {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+      .tag-text {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+      }
+      @keyframes marqueeLinear {
+        0% { transform: translateX(0px); }
+        100% { transform: translateX(-1800px); }
+      }
+      .track-container {
+        animation: marqueeLinear 24s linear infinite;
+        will-change: transform;
+      }
+    </style>
+  </defs>
+
+  <!-- Cream Parchment Ground -->
+  <rect width="920" height="96" fill="#EFE9DD" stroke="#141C2B" stroke-opacity="0.2" stroke-width="1.2" />
+
+  <!-- Top Category Bar -->
+  <rect x="0" y="0" width="920" height="28" fill="#E5DED0" stroke="#141C2B" stroke-opacity="0.1" stroke-width="1" />
+  <circle cx="24" cy="14" r="4" fill="#2C4A8F" />
+  <text x="36" y="18" class="tag-text" fill="#141C2B">
+    CONTINUOUS PIPELINE GUARANTEE <tspan fill="#767E8C">//</tspan> ZERO UNVALIDATED QUERIES <tspan fill="#767E8C">//</tspan> READ-ONLY ENFORCED
+  </text>
+
+  <!-- Flowing Track -->
+  <g transform="translate(0, 40)">
+    <g class="track-container">
+      
+      <!-- Block 1: Exactly 1800px wide -->
+      <g id="block-a" transform="translate(0, 0)">
+        <g transform="translate(0, 0)">
+          <text x="30" y="24" class="t-item" fill="#141C2B">NATURAL LANGUAGE <tspan fill="#2C4A8F">➔</tspan> STRUCTURED INTENT</text>
+          <text x="370" y="24" class="t-item" fill="#2C4A8F">◆</text>
+        </g>
+        <g transform="translate(420, 0)">
+          <text x="0" y="24" class="t-item" fill="#141C2B">SCHEMA INTROSPECTION <tspan fill="#767E8C">VIA</tspan> SQLALCHEMY</text>
+          <text x="340" y="24" class="t-item" fill="#2C4A8F">◆</text>
+        </g>
+        <g transform="translate(810, 0)">
+          <text x="0" y="24" class="t-item" fill="#141C2B">AMBIGUITY DETECTION <tspan fill="#767E8C">BEFORE</tspan> EXECUTION</text>
+          <text x="380" y="24" class="t-item" fill="#2C4A8F">◆</text>
+        </g>
+        <g transform="translate(1240, 0)">
+          <text x="0" y="24" class="t-item" fill="#141C2B">AST VALIDATOR <tspan fill="#767E8C">VIA</tspan> SQLGLOT</text>
+          <text x="240" y="24" class="t-item" fill="#2C4A8F">◆</text>
+        </g>
+        <g transform="translate(1530, 0)">
+          <text x="0" y="24" class="t-item" fill="#141C2B">TIMEOUT 30s + LIMIT 1000</text>
+          <text x="230" y="24" class="t-item" fill="#2C4A8F">◆</text>
+        </g>
+      </g>
+
+      <!-- Block 2: Positioned at exactly 1800px for a seamless loop -->
+      <g id="block-b" transform="translate(1800, 0)">
+        <g transform="translate(0, 0)">
+          <text x="30" y="24" class="t-item" fill="#141C2B">NATURAL LANGUAGE <tspan fill="#2C4A8F">➔</tspan> STRUCTURED INTENT</text>
+          <text x="370" y="24" class="t-item" fill="#2C4A8F">◆</text>
+        </g>
+        <g transform="translate(420, 0)">
+          <text x="0" y="24" class="t-item" fill="#141C2B">SCHEMA INTROSPECTION <tspan fill="#767E8C">VIA</tspan> SQLALCHEMY</text>
+          <text x="340" y="24" class="t-item" fill="#2C4A8F">◆</text>
+        </g>
+        <g transform="translate(810, 0)">
+          <text x="0" y="24" class="t-item" fill="#141C2B">AMBIGUITY DETECTION <tspan fill="#767E8C">BEFORE</tspan> EXECUTION</text>
+          <text x="380" y="24" class="t-item" fill="#2C4A8F">◆</text>
+        </g>
+        <g transform="translate(1240, 0)">
+          <text x="0" y="24" class="t-item" fill="#141C2B">AST VALIDATOR <tspan fill="#767E8C">VIA</tspan> SQLGLOT</text>
+          <text x="240" y="24" class="t-item" fill="#2C4A8F">◆</text>
+        </g>
+        <g transform="translate(1530, 0)">
+          <text x="0" y="24" class="t-item" fill="#141C2B">TIMEOUT 30s + LIMIT 1000</text>
+          <text x="230" y="24" class="t-item" fill="#2C4A8F">◆</text>
+        </g>
+      </g>
+
+    </g>
+  </g>
+</svg>
